@@ -1,0 +1,103 @@
+<DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Tracker</title>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiBW2M4o5gjoNrmMqTheA4IuQTrCe3yXU&callback=initMap" defer></script>
+    </head>
+    <body>
+      <h1>Position :</h1>
+      <p id="position"></p>
+      <button id="meinBoutton">Lancer le tracking</button>
+      <div id="map" style="width: 100%; height: 100%"></div>
+
+      <script>
+        const positionTracker = document.querySelector("#position");
+        const boutton = document.querySelector("#meinBoutton");
+        let coords = {};
+        let test = 0;
+        let intervalId;
+
+        boutton.addEventListener("click", () => {
+          if (!intervalId) {
+            intervalId = setInterval(successCallback, 500);
+            // navigator.geolocation.watchPosition(successCallback);
+            boutton.innerHTML = "Arrêter le tracker";
+          } else {
+            navigator.geolocation.clearWatch(intervalId);
+            intervalId = undefined;
+            boutton.innerHTML = "Lancer le tracker";
+          }
+        });
+
+        const successCallback = (position) => {
+          test++;
+          coords = {
+            latitude: 43.64278285286693 + Math.random() / 10000,
+            longitude: 3.840665072438858 + Math.random() / 10000,
+          };
+
+          if (marker) {
+            marker.setPosition({
+              lat: coords.latitude,
+              lng: coords.longitude,
+            });
+            map.setCenter({
+              lat: coords.latitude,
+              lng: coords.longitude,
+            });
+          }
+          console.log(coords);
+          fetch("http://localhost:8000/tracker/position/update/633ea7cc3e66c81c93c67fe1", {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: JSON.stringify(coords),
+          });
+          fetch("https://localhost:8000/tracker/position/update/633ea7cc3e66c81c93c67fe1", {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: JSON.stringify(coords),
+          });
+          positionTracker.innerHTML = `TEST${test}\nLatitude : ${coords.latitude}\n Longitude : ${coords.longitude}\nAccuracy : ${coords.accuracy}`;
+        };
+
+        const errorCallback = (error) => {
+          window.location.reload();
+        };
+
+        let map = null;
+        let marker = null;
+
+        function initMap() {
+          navigator.geolocation.getCurrentPosition((pos) => {
+            map = new google.maps.Map(document.getElementById("map"), {
+              zoom: 18,
+              center: {
+                lat: pos.coords.latitude,
+                lng: pos.coords.longitude,
+              },
+            });
+
+            marker = new google.maps.Marker({
+              position: {
+                lat: pos.coords.latitude,
+                lng: pos.coords.longitude,
+              },
+              map: map,
+            });
+          });
+        }
+
+        window.initMap = initMap;
+      </script>
+    </body>
+  </html>
+</DOCTYPE>

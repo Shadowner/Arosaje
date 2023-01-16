@@ -1,0 +1,24 @@
+{
+  "controllerPathGlobs": [
+    "src/Controllers/*Controller.ts"
+  ],
+  "noImplicitAdditionalProperties": "throw-on-extras",
+  "routes": {
+    "routesDir": "src/routers",
+    "middleware": "express",
+    "authenticationModule": "src/middlewares/authentication.ts"
+  },
+  "spec": {
+    "outputDirectory": "public",
+    "specVersion": 3,
+    "spec": {
+      "securityDefinitions": {
+        "api_key": {
+          "type": "apiKey",
+          "name": "access_token",
+          "in": "query"
+        }
+      }
+    }
+  }
+}
