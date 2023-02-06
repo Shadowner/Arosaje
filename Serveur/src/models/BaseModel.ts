@@ -1,7 +1,8 @@
 import { ObjectId } from "mongodb";
+import { BaseEntity } from "../dto/BaseEntity";
 import { DatabaseService } from "../services/DatabaseService";
 import { ModelService } from '../services/ModelService';
-export abstract class BaseModel<T extends { _id: ObjectId }> {
+export abstract class BaseModel<T extends BaseEntity> {
     public readonly _id: ObjectId;
 
     private collectionName: string;
