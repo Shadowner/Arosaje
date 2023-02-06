@@ -1,7 +1,9 @@
 import { Request as ExpressRequest } from "express";
-import { Body, Controller, Delete, Inject, Patch, Post, Request, Route, Security } from "tsoa";
+import { Body, Controller, Delete, Patch, Post, Request, Route, Security } from "tsoa";
+import { Inject } from "typescript-ioc";
 import { BaseEntity } from "../dto/BaseEntity";
 import { UserDTO } from "../dto/UserDTO";
+import { UserService } from "../services/UserService";
 
 export interface ILoginCredentials {
     password: string,
@@ -11,9 +13,12 @@ export interface ILoginCredentials {
 @Route("user")
 export class UserController extends Controller {
 
+    @Inject
+    private userService!: UserService;
+
     @Post("login")
     public async login(@Body() credential: ILoginCredentials) {
-
+        this.userService.test();
     }
 
     @Post("logout")
