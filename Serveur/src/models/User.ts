@@ -1,17 +1,20 @@
-import { IUser } from "../types";
 import { BaseModel } from "./BaseModel";
 import { ObjectId } from "mongodb";
-import { ICreateTracker } from './Tracker';
 import { ModelService } from "../services/ModelService";
 import { Security } from "../util/Security";
+import { UserDTO } from "../dto/UserDTO";
+import { ConversationDTO } from "../dto/ConversationDTO";
+import { FileDTO } from "../dto/FileDTO";
+import { PlantDTO } from "../dto/PlantDTO";
+import { RoleDTO } from "../dto/RoleDTO";
 
-export interface ICreateUser extends Omit<IUser,
+export interface ICreateUser extends Omit<UserDTO,
     "_id" |
     "zonesId" |
     "animalsId" |
     "trackersId" |
     "photoUrl"> { }
-export class User extends BaseModel<IUser> implements IUser {
+export class User extends BaseModel<UserDTO> implements UserDTO {
     public static collectionName = "User";
     public static async create(createItem: ICreateUser) {
         console.log("Création de l'utilisateur", createItem)
@@ -24,12 +27,12 @@ export class User extends BaseModel<IUser> implements IUser {
     public static async find(query: Record<string, string>) {
         return await ModelService.findModel(this, query);
     }
+    
     public firstname: string;
     public email: string;
     public username: string;
     public password: string;
     public lastname: string;
-    public birthdate: string;
     public photoUrl: string;
     public zonesId: ObjectId[];
     public animalsId: ObjectId[];
@@ -41,7 +44,6 @@ export class User extends BaseModel<IUser> implements IUser {
         this.email = obj.email;
         this.firstname = obj.firstname;
         this.lastname = obj.lastname;
-        this.birthdate = obj.birthdate;
         this.photoUrl = obj.photoUrl;
         this.zonesId = obj.zonesId;
         this.animalsId = obj.animalsId;
@@ -49,16 +51,21 @@ export class User extends BaseModel<IUser> implements IUser {
         this.password = obj.password;
     }
 
-    public toObject(): IUser {
-        return {
-            _id: this._id,
-            username: this.username,
-            firstname: this.firstname,
-            lastname: this.lastname,
-            zonesId: this.zonesId,
-            animalsId: this.animalsId,
-            trackersId: this.trackersId,
-            password: this.password,
-        }
+    birthdate!: Date;
+    mail!: string;
+    phone!: string;
+    address!: string;
+    city!: string;
+    country!: string;
+    avatar!: FileDTO;
+    files!: FileDTO[];
+    conversations!: ConversationDTO[];
+    plants!: PlantDTO[];
+    roles!: RoleDTO[];
+    last_connection!: Date;
+    id!: number;
+
+    public toObject(): UserDTO {
+        throw new Error("Not implemented")
     }
 }
