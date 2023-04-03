@@ -16,14 +16,14 @@ export class User extends BaseEntity {
   id!: number;
 
   @Column()
-  last_name!: string;
+  lastName!: string;
 
   @Column()
-  first_name!: string;
+  firstName!: string;
 
   @Column()
   @IsDate()
-  birth_date!: Date;
+  birthDate!: Date;
 
   @Column()
   address!: string;
@@ -40,7 +40,7 @@ export class User extends BaseEntity {
 
   @Column()
   @Length(0, 10)
-  phone_number!: string;
+  phoneNumber!: string;
 
   @Column()
   password!: string;
@@ -49,20 +49,20 @@ export class User extends BaseEntity {
   avatar!: string;
 
   @CreateDateColumn()
-  created_at!: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn()
-  updated_at!: Date;
+  updatedAt!: Date;
 
   @Column()
   @IsDate()
-  last_connection!: Date;
+  lastConnection!: Date;
 
   @ManyToMany(type => Role, { onDelete: 'CASCADE' })
   @JoinTable({
     name: "role_user",
-    joinColumns: [{ name: "user_id" }],
-    inverseJoinColumns: [{ name: "role_id" }]
+    joinColumns: [{ name: "userId" }],
+    inverseJoinColumns: [{ name: "roleId" }]
   })
   roles!: Role[];
 

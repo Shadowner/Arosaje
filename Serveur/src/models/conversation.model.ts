@@ -16,8 +16,8 @@ export class Conversation extends BaseEntity {
   @ManyToMany(type => User)
   @JoinTable({
     name: "conversation_participant",
-    joinColumns: [{ name: "conversation_id" }],
-    inverseJoinColumns: [{ name: "user_id" }]
+    joinColumns: [{ name: "conversationId" }],
+    inverseJoinColumns: [{ name: "userId" }]
     })
   participants!: User[];
 }

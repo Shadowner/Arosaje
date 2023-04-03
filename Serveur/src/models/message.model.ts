@@ -14,13 +14,13 @@ export class Message extends BaseEntity {
 
   @Column()
   @IsDate()
-  send_date!: Date;
+  sendDate!: Date;
 
   @ManyToOne(type => User, user => user.messages)
-  @JoinColumn({ name: 'user_id' })
+  @JoinColumn({ name: 'userId' })
   author!: User;
 
   @ManyToOne(type => Conversation, conversation => conversation.messages)
-  @JoinColumn({ name: 'conversation_id' })
+  @JoinColumn({ name: 'conversationId' })
   conversation!: Conversation;
 }

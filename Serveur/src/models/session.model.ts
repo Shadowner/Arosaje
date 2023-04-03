@@ -16,14 +16,14 @@ export class Session extends BaseEntity {
   comment!: string;
 
   @ManyToOne(() => Guard, guard => guard.sessions)
-  @JoinColumn({ name: 'guard_id' })
+  @JoinColumn({ name: 'guardId' })
   guard!: Guard;
 
   @ManyToMany(type => File, { onDelete: 'CASCADE' })
   @JoinTable({
     name: "session_picture",
-    joinColumns: [{ name: "session_id" }],
-    inverseJoinColumns: [{ name: "file_id" }]
+    joinColumns: [{ name: "sessionId" }],
+    inverseJoinColumns: [{ name: "fileId" }]
   })
   files!: File[];
 

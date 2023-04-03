@@ -11,19 +11,19 @@ export class Guard extends BaseEntity {
 
   @Column()
   @IsDate()
-  start_date!: Date;
+  startDate!: Date;
 
   @Column()
   @IsDate()
-  end_date!: Date;
+  endDate!: Date;
 
   @ManyToOne(() => User)
-  @JoinColumn({ name: 'user_id' })
-  guardian_user!: User;
+  @JoinColumn({ name: 'userId' })
+  guardianUser!: User;
 
   @ManyToOne(() => Plant)
-  @JoinColumn({ name: 'plant_id' })
-  guarded_plant!: Plant;
+  @JoinColumn({ name: 'plantId' })
+  guardedPlant!: Plant;
 
   @OneToMany(() => Session, session => session.guard, { onDelete: 'CASCADE' })
   sessions!: Session[];

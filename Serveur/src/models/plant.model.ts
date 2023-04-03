@@ -18,18 +18,18 @@ export class Plant extends BaseEntity {
   size!: number;
 
   @ManyToOne(() => User, user => user.plantes, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'user_id' })
+  @JoinColumn({ name: 'userId' })
   user!: User;
 
   @ManyToMany(type => File, { onDelete: 'CASCADE' })
   @JoinTable({
     name: "plant_picture",
-    joinColumns: [{ name: "plant_id" }],
-    inverseJoinColumns: [{ name: "file_id" }]
+    joinColumns: [{ name: "plantId" }],
+    inverseJoinColumns: [{ name: "fileId" }]
   })
   files!: File[];
 
   @ManyToOne(() => PlantType)
-  @JoinColumn({ name: 'plant_type_id' })
-  plant_type!: PlantType;
+  @JoinColumn({ name: 'plantTypeId' })
+  plantType!: PlantType;
 }

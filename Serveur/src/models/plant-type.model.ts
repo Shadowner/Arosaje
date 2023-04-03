@@ -10,12 +10,12 @@ export class PlantType extends BaseEntity {
   name!: string;
 
   @Column()
-  origine_name!: string;
+  origineName!: string;
 
   @Column()
-  optimal_temperature!: number;
+  optimalTemperature!: number;
 
   @OneToOne(() => File, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'file_id' })
+  @JoinColumn({ name: 'fileId' })
   file!: File;
 }
