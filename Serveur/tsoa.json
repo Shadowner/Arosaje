@@ -1,6 +1,6 @@
 {
   "controllerPathGlobs": [
-    "src/Controllers/*Controller.ts"
+    "src/controllers/*.controller.ts"
   ],
   "noImplicitAdditionalProperties": "throw-on-extras",
   "routes": {

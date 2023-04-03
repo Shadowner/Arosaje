@@ -1,15 +1,16 @@
 import { Request as ExpressRequest } from "express";
-import { Body, Controller, Delete, Patch, Post, Request, Route, Security } from "tsoa";
+import { Body, Controller, Delete, Patch, Path, Post, Request, Route, Security, Tags } from "tsoa";
 import { Inject } from "typescript-ioc";
-import { BaseEntity } from "../dto/BaseEntity";
-import { UserDTO } from "../dto/UserDTO";
-import { UserService } from "../services/UserService";
+import { BaseEntity } from "../DTO/BaseEntity";
+import { UserDTO } from "../DTO/UserDTO";
+import { UserService } from "../services/user.service";
 
 export interface ILoginCredentials {
     password: string,
     username: string
 }
 
+@Tags("Utilisateur")
 @Route("user")
 export class UserController extends Controller {
 
@@ -22,7 +23,7 @@ export class UserController extends Controller {
     }
 
     @Post("logout")
-    public async logour(@Request() request: ExpressRequest) {
+    public async logout(@Request() request: ExpressRequest) {
 
     }
 
@@ -34,14 +35,8 @@ export class UserController extends Controller {
     }
 
     @Security("jwt")
-    @Delete("delete")
-    public async delete(@Request() request: ExpressRequest) {
-
-    }
-
-    @Security("jwt")
-    @Delete("fetch")
-    public async fetch(@Request() request: ExpressRequest) {
+    @Delete("{id}")
+    public async delete(@Path() id: string) {
 
     }
 

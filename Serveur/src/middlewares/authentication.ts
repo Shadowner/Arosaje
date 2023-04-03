@@ -1,6 +1,5 @@
 import * as express from "express";
 import * as jwt from "jsonwebtoken";
-import { BaseEntity } from "../dto/BaseEntity";
 
 export function expressAuthentication(
     request: express.Request,
@@ -20,13 +19,16 @@ export function expressAuthentication(
                 if (err)
                     throw err;
 
-                if (!scopes || scopes.length === 0)
+                if (!scopes || scopes.length === 0) return res(decoded);
+
+                if ((!decoded.scopes || decoded.scopes.length === 0))
                     return rej(new Error("JWT does not contain required scope."));
 
                 for (let scope of scopes) {
                     if (!decoded.scopes.includes(scope))
                         return rej(new Error("JWT does not contain required scope."));
                 }
+
                 return res(decoded);
             });
         });

@@ -20,42 +20,44 @@ const io = new Server(server, {
         origin: '*'
     }
 });
-const PORT = process.env.PORT || 8000;
 
-    // Establish database connection
-    AppDataSource
-        .initialize()
-        .then(() => {
-            console.log("Data Source has been initialized!")
-        })
-        .catch((err) => {
-            console.error("Error during Data Source initialization:", err)
+
+const PORT = process.env.PORT || 8080;
+
+// Establish database connection
+AppDataSource
+    .initialize()
+    .then(() => {
+        console.log("Data Source has been initialized!")
+    })
+    .catch((err) => {
+        console.error("Error during Data Source initialization:", err)
     })
 
-    // Express
-    app.disable('etag');
-    app.use(cors())
-    app.use(express.json())
-    app.use(morgan("tiny"));
-    app.use(express.static("public"));
-    RegisterRoutes(app);
+// Express
+app.disable('etag');
+app.use(cors())
+app.use(express.json())
+app.use(morgan("tiny"));
+app.use(express.static("public"));
+RegisterRoutes(app);
 
-    app.use(
-        "/docs",
-        swaggerUi.serve,
-        swaggerUi.setup(undefined, {
-            swaggerOptions: {
-                url: "/swagger.json",
-            },
-        })
-    );
+app.use(
+    "/docs",
+    swaggerUi.serve,
+    swaggerUi.setup(undefined, {
+        swaggerOptions: {
+            url: "/swagger.json",
+        },
+    })
+);
 
-    io.on("connection", () => {
-        console.log("Nouvelle connection");
-    });
+io.on("connection", () => {
+    console.log("Nouvelle connection");
+});
 
-    // Run server
-    server.listen(PORT);
-    httpsServer.listen(4443)
+// Run server
+server.listen(PORT);
+httpsServer.listen(4443)
 
 export default io;
