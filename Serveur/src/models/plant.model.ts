@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, ManyToOne, JoinColumn, ManyToMany, JoinTable } from 'typeorm';
 import { User } from './user.model';
 import { File } from './file.model';
-import { PlantType } from './plant-type.model';
+import { PlantType } from './plantType.model';
 
 @Entity()
 export class Plant extends BaseEntity {

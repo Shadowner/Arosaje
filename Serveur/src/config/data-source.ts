@@ -5,7 +5,7 @@ import { Plant } from "../models/plant.model";
 import { Role } from "../models/role.model";
 import { User } from "../models/user.model"
 import { File } from "../models/file.model"
-import { PlantType } from "../models/plant-type.model";
+import { PlantType } from "../models/plantType.model";
 import { Guard } from "../models/guard.model";
 import { Session } from "../models/session.model";
 import { Conversation } from "../models/conversation.model";
