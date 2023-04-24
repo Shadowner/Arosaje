@@ -17,7 +17,7 @@ export class Plant extends BaseEntity {
   @Column()
   size!: number;
 
-  @ManyToOne(() => User, user => user.plantes, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, user => user.plants, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
   user!: User;
 
