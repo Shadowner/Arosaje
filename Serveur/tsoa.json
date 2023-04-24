@@ -14,7 +14,7 @@
     "spec": {
       "securityDefinitions": {
         "api_key": {
-          "type": "apiKey",
+          "type": "jwt",
           "name": "access_token",
           "in": "query"
         }

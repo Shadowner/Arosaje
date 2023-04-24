@@ -23,4 +23,14 @@ export class Message extends BaseEntity {
   @ManyToOne(type => Conversation, conversation => conversation.messages)
   @JoinColumn({ name: 'conversationId' })
   conversation!: Conversation;
+
+  public toObject() {
+    return {
+      id: this.id,
+      content: this.content,
+      sendDate: this.sendDate,
+      authorId: this.author.id,
+      conversationId: this.conversation.id,
+    }
+  }
 }

@@ -15,7 +15,7 @@ export interface UserDTO extends BaseEntity {
     country: string,
     password: string,
 
-    avatar: FileDTO,
+    avatar: string,
     files: FileDTO[],
 
     conversations: ConversationDTO[],

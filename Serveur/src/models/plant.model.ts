@@ -13,7 +13,7 @@ export class Plant extends BaseEntity {
 
   @Column()
   description!: string;
-  
+
   @Column()
   size!: number;
 
@@ -32,4 +32,15 @@ export class Plant extends BaseEntity {
   @ManyToOne(() => PlantType)
   @JoinColumn({ name: 'plantTypeId' })
   plantType!: PlantType;
+
+  public toObject() {
+    return {
+      id: this.id,
+      name: this.name,
+      description: this.description,
+      size: this.size,
+      userId: this.user.id,
+      plantType: this.plantType.id,
+    };
+  }
 }

@@ -2,8 +2,8 @@ import { MessageDTO } from "./MessageDTO";
 import { UserDTO } from "./UserDTO";
 
 export interface ConversationDTO {
-    messages: MessageDTO
+    messages: MessageDTO[]
     nom: string,
-    creation_date: Date,
+    creationDate: Date,
     users?: UserDTO[]
 }

@@ -9,6 +9,20 @@ import { Role } from './role.model';
 import { Plant } from './plant.model';
 import { Message } from './message.model';
 import { Conversation } from './conversation.model';
+import { hash } from 'bcrypt';
+
+export interface UserCreate {
+  lastname: string;
+  firstname: string;
+  birthdate: Date;
+  address: string;
+  city: string;
+  country: string;
+  email: string;
+  phoneNumber: string;
+  password: string;
+}
+
 
 @Entity()
 export class User extends BaseEntity {
@@ -34,7 +48,9 @@ export class User extends BaseEntity {
   @Column()
   country!: string;
 
-  @Column()
+  @Column({
+    unique: true,
+  })
   @IsEmail()
   email!: string;
 
@@ -45,8 +61,11 @@ export class User extends BaseEntity {
   @Column()
   password!: string;
 
-  @Column()
-  avatar!: string;
+  @Column({
+    type: 'text',
+    nullable: true,
+  })
+  avatar!: string | null;
 
   @CreateDateColumn()
   createdAt!: Date;
@@ -54,7 +73,9 @@ export class User extends BaseEntity {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @Column()
+  @Column({
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   @IsDate()
   lastConnection!: Date;
 
@@ -72,12 +93,31 @@ export class User extends BaseEntity {
   @OneToMany(type => Message, message => message.author)
   messages!: Message[];
 
-  @ManyToMany(type => Conversation)
+  @ManyToMany(type => Conversation, conv => conv.participants)
   conversations!: Conversation[];
+
 
   @BeforeInsert()
   async hashPassword() {
-    this.password = createHash('sha256').update(this.password).digest('hex');
+    this.password = await hash(this.password, 10);
   }
-  
+
+
+  public readonly jwts: string[] = [];
+
+  public publicUserObject() {
+    return {
+      id: this.id,
+      lastname: this.lastname,
+      firstname: this.firstname,
+      birthdate: this.birthdate,
+      address: this.address,
+      city: this.city,
+      country: this.country,
+      avatar: this.avatar,
+      roles: this.roles.map(role => role.id),
+      plants: this.plants.map(plant => plant.id),
+    }
+  }
+
 }

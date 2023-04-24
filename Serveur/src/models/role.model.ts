@@ -7,4 +7,11 @@ export class Role extends BaseEntity {
 
   @Column()
   name!: string;
+
+  public toObject() {
+    return {
+      id: this.id,
+      name: this.name,
+    };
+  }
 }

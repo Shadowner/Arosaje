@@ -18,4 +18,14 @@ export class PlantType extends BaseEntity {
   @OneToOne(() => File, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'fileId' })
   file!: File;
+
+
+  public toObject() {
+    return {
+      id: this.id,
+      name: this.name,
+      origineName: this.origineName,
+      optimalTemperature: this.optimalTemperature,
+    };
+  }
 }
