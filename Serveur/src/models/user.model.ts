@@ -9,7 +9,7 @@ import { Role } from './role.model';
 import { Plant } from './plant.model';
 import { Message } from './message.model';
 import { Conversation } from './conversation.model';
-
+import { Notification } from './notification.model';
 @Entity()
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -75,9 +75,11 @@ export class User extends BaseEntity {
   @ManyToMany(type => Conversation)
   conversations!: Conversation[];
 
+  @OneToMany(() => Notification, notification => notification.user)
+  notifications!: Notification[];
+
   @BeforeInsert()
   async hashPassword() {
     this.password = createHash('sha256').update(this.password).digest('hex');
   }
-  
 }
