@@ -96,6 +96,8 @@ export class User extends BaseEntity {
   @ManyToMany(type => Conversation, conv => conv.participants)
   conversations!: Conversation[];
 
+  @OneToMany(() => Notification, notification => notification.user)
+  notifications!: Notification[];
 
   @BeforeInsert()
   async hashPassword() {

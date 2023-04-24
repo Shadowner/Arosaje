@@ -17,6 +17,12 @@ export class Plant extends BaseEntity {
   @Column()
   size!: number;
 
+  @Column()
+  longitude!: number;
+
+  @Column()
+  latitude!: number;
+
   @ManyToOne(() => User, user => user.plants, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
   user!: User;
