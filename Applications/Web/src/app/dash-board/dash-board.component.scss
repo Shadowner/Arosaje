@@ -1,0 +1,13 @@
+.product-item{
+  backdrop-filter: blur(5px);
+  .product-item-content {
+    border: 3px solid var(--surface-d);
+    border-radius: 3px;
+    margin: .3rem;
+    text-align: center;
+    padding: 2rem 0;
+  }
+  .product-image {
+    width:30%;
+  }
+}

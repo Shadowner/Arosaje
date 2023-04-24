@@ -1,0 +1,23 @@
+p{
+  font-family: "Oregano", Arial,Helvetica,sans-serif;
+}
+.btn:active {
+  outline-color: red;
+}
+
+.blurClass{
+  backdrop-filter: blur(5px);
+}
+#loginBG{
+  background: url("../../assets/images/background_login_3.1.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment:fixed ;
+  width: 100vw;
+  height: 100vh;
+}
+
+
+.loginContainerBlur{
+  height: 20vh;
+}

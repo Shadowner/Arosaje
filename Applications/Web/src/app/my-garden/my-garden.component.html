@@ -1,0 +1,74 @@
+<div id="myGardenContainer" class="flex flex-col justify-center items-center">
+  <p-dialog *ngIf="visible" header="Formulaire ajout de plante" [(visible)]="visible" [modal]="true" [draggable]="false" [resizable]="false" [style]="{width:'50vw'}">
+    <div *ngIf="visible" class="flex flex-col">
+      <div class="flex flex-row">
+            <span class="w-full mb-4 p-float-label">
+              <input class="w-full" [(ngModel)]="nomPlante" pInputText id="nomPlante" />
+              <label htmlFor="username" >Nom de la plante</label>
+            </span>
+        <!--<p-toggleButton class="ml-2"  [(ngModel)]="checkedNomPlante" onLabel="Afficher" offLabel="Cacher"></p-toggleButton>-->
+      </div>
+      <span class="my-4 p-float-label">
+            <input class="w-full" [(ngModel)]="famillePlante" pInputText id="famillePlante" />
+            <label htmlFor="username">Famille botanique de la plante</label>
+          </span>
+      <span class="my-4 p-float-label">
+            <input class="w-full" [(ngModel)]="resistancePlante" pInputText id="résistancePlante" />
+            <label htmlFor="username">Résistance au froid</label>
+          </span>
+      <span class="my-4 p-float-label">
+            <input class="w-full" [(ngModel)]="floraisonPlante" pInputText id="floraisonPlante" />
+            <label htmlFor="username">Période de floraison</label>
+          </span>
+      <span class="my-4 p-float-label">
+            <input class="w-full" [(ngModel)]="expositionPlante" pInputText id="exposition" />
+            <label htmlFor="username">Exposition de la plante</label>
+          </span>
+      <div class="flex flex-col mt-4">
+        <p-button class="p-button-success" (onClick)="submitPlante()" label="Submit"></p-button>
+      </div>
+    </div>
+  </p-dialog>
+  <p-table
+  class="h-2/4 mt-20 xl:mt-0 w-11/12 xl:h-full xl:w-2/4 xl:flex xl:flex-col xl:justify-center overflow-y-scroll"
+    #dt1
+    [value]="products"
+    responsiveLayout="stack"
+    [paginator]="true"
+    [globalFilterFields]="['name']"
+    [rows]="6">
+    <ng-template class="fixed" pTemplate="caption">
+      <div class="flex flex-col lg:flex-row justify-between">
+        <div class="mb-4">
+          <input pInputText type="text" placeholder="Rechercher" />
+        </div>
+        <p-button (click)="showDialog()" label="Ajouter une plante" icon="pi pi-plus" iconPos="right"></p-button>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>Statut</th>
+        <th>Action</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>{{product.name}}</td>
+        <td><img src="assets/images/plant.png" style="cursor:pointer;" [routerLink]="'/plant/'+product.id" [alt]="product.name" width="40" class="shadow-4" /></td>
+        <td>{{product.price | currency:'USD'}}</td>
+        <td>{{product.category}}</td>
+        <td><p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)"></p-tag></td>
+        <td><p-button label="Supprimer" styleClass="p-button-danger p-button-sm" (click)="removePlante(product)"></p-button></td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-between">
+        Votre jardin compte un total de {{products ? products.length : 0 }} plantes.
+      </div>
+    </ng-template>
+  </p-table>
+</div>

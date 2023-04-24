@@ -1,0 +1,22 @@
+<div id="DashBG" class="flex flex-col xl:justify-around justify-center">
+  <div class="flex flex-col justify-items-center align-items-center content-center">
+    <p-carousel class="xl:w-1/2 w-3/4 self-center" [value]="products" [numVisible]="2" [numScroll]="1" [circular]="true" [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
+      <ng-template pTemplate="header">
+        <h1 class="xl:text-5xl sm:text-3xl text-lg font-bold text-center mb-10">Bienvenu chez A'ROSA-JE</h1>
+
+        <h5 class="text-center sm:text-3xl xl:text-5xl text-lg font-bold mb-10">Mes plantes</h5>
+      </ng-template>
+      <ng-template let-product pTemplate="item">
+        <div style="cursor:pointer;" (click)="redirectToPlantProfil(product)" class="product-item">
+          <div class="product-item-content flex flex-col  items-center content-center justify-center">
+            <div class="p-mb-3 flex flex-row justify-center ">
+              <img  src="../../assets/images/plant.png" [alt]="product.name" class="product-image" />
+            </div>
+            <span id="title" class="mt-4 xl:text-3xl text-sm">{{product.name}}</span>
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
+  </div>
+
+</div>

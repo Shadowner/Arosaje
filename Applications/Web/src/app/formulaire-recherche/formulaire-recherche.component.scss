@@ -1,0 +1,14 @@
+:host ::ng-deep {
+  .c-icons {
+    width: 48px;
+    height: 48px;
+  }
+
+  .plant-icon {
+    background-image: url("../../assets/images/plant.svg");
+  }
+
+  .users-icon{
+    background-image: url('../../assets/images/group_users.svg');
+  }
+}

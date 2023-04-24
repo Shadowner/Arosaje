@@ -1,0 +1,114 @@
+<div id="formulaireContainer" class="flex flex-col items-center justify-center">
+  <span class=" mt-28 mb-8 xl:mt-0 xl:mb-0 font-bold text-xl sm:text-3xl">Tableau de Recherche</span>
+  <p-tabView class="p-0 m-0 w-11/12 h-2/4 xl:w-2/4 xl:h-3/4 overflow-y-scroll ">
+      <p-tabPanel header="Utilisateurs">
+        <!--<div *ngIf="!showTableUser" class="flex flex-col">
+          <span class="my-4 p-float-label">
+            <input class="w-full" pInputText id="nom" />
+            <label htmlFor="username">Nom de l'utilisateur</label>
+          </span>
+          <span class="my-4 p-float-label">
+            <input class="w-full" pInputText id="prenom" />
+            <label htmlFor="username">Prenom de l'utilisateur</label>
+          </span>
+          <span class="my-4 p-float-label">
+            <input class="w-full" pInputText id="adresse" />
+            <label htmlFor="username">Adresse postal de l'utilisateur</label>
+          </span>
+          <span class="my-4 p-float-label">
+            <input class="w-full" pInputText id="cp" />
+            <label htmlFor="username">Code Postal de l'utilisateur</label>
+          </span>
+          <span class="my-4 p-float-label">
+            <input class="w-full" pInputText id="ville" />
+            <label htmlFor="username">Ville de l'utilisateur</label>
+          </span>
+          <div class="flex flex-col">
+            <p-button class="p-button-success mt-4" (onClick)="submitUser()" label="Submit"></p-button>
+          </div>
+        </div>-->
+          <p-table *ngIf="!showTableUser" [paginator]="true"
+                    responsiveLayout="stack"
+                   [rows]="5"
+                   (sortFunction)="customSort($event)"
+                   [customSort]="true"
+                   [showCurrentPageReport]="true"
+                   [value]="products" styleClass="p-datatable-striped" class="rounded-lg" >
+            <ng-template pTemplate="header">
+              <tr>
+                <th  pSortableColumn="name" >Nom <p-sortIcon field="name"></p-sortIcon></th>
+                <th  pSortableColumn="category" >Category <p-sortIcon field="category"></p-sortIcon></th>
+                <th  pSortableColumn="quantity" >Quantity <p-sortIcon field="quantity"></p-sortIcon></th>
+                <th pSortableColumn="note">Notes<p-sortIcon field="note"></p-sortIcon></th>
+                <th>Statut</th>
+                <th>Profil</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+              <tr>
+                <td>{{product.name}}</td>
+                <td>{{product.code}}</td>
+                <td>{{product.description}}</td>
+                <td><p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating></td>
+                <td><p-tag value="Botaniste"></p-tag></td>
+                <td  style="cursor:pointer;" (click)="goToUser(product)"><img style="height: 40px;width: 40px" src="../../assets/images/AROSAJE_logo.png" [alt]="product.name" class="product-image" /></td>
+              </tr>
+            </ng-template>
+          </p-table>
+
+      </p-tabPanel>
+      <p-tabPanel header="Plantes">
+        <!--<div *ngIf="!showTablePlante" class="flex flex-col">
+          <div class="flex flex-row">
+            <span *ngIf="checkedNomPlante == false" class="w-full mb-4 p-float-label">
+              <input class="w-full" pInputText id="nomPlante" />
+              <label htmlFor="username">Nom de la plante</label>
+            </span>
+            <p-toggleButton class="ml-2"  [(ngModel)]="checkedNomPlante" onLabel="Afficher" offLabel="Cacher"></p-toggleButton>
+          </div>
+          <span class="my-4 p-float-label">
+            <input class="w-full" pInputText id="famillePlante" />
+            <label htmlFor="username">Famille botanique de la plante</label>
+          </span>
+          <span class="my-4 p-float-label">
+            <input class="w-full" pInputText id="résistancePlante" />
+            <label htmlFor="username">Résistance au froid</label>
+          </span>
+          <span class="my-4 p-float-label">
+            <input class="w-full" pInputText id="floraisonPlante" />
+            <label htmlFor="username">Période de floraison</label>
+          </span>
+          <span class="my-4 p-float-label">
+            <input class="w-full" pInputText id="exposition" />
+            <label htmlFor="username">Exposition de la plante</label>
+          </span>
+          <div class="flex flex-col mt-4">
+            <p-button class="p-button-success" (onClick)="submitPlante()" label="Submit"></p-button>
+          </div>
+        </div>-->
+          <p-table *ngIf="!showTablePlante" [paginator]="true"
+                   [rows]="5"
+                   responsiveLayout="stack"
+                   [showCurrentPageReport]="true"
+                   [value]="products" styleClass="p-datatable-striped">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Quantity</th>
+                <th>Profil</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+              <tr>
+                <td>{{product.name}}</td>
+                <td>{{product.code}}</td>
+                <td>{{product.description}}</td>
+                <td style="cursor:pointer;" (click)="goToPlant(product)"><img style="height: 40px;width: 40px" src="../../assets/images/plant.png" [alt]="product.name" class="product-image" /></td>
+              </tr>
+            </ng-template>
+          </p-table>
+
+      </p-tabPanel>
+    </p-tabView>
+</div>
