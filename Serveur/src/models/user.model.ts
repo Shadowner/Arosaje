@@ -10,6 +10,7 @@ import { Plant } from './plant.model';
 import { Message } from './message.model';
 import { Conversation } from './conversation.model';
 import { hash } from 'bcrypt';
+import { Notification } from './notification.model';
 
 export interface UserCreate {
   lastname: string;

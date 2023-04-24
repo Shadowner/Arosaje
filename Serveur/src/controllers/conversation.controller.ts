@@ -1,4 +1,3 @@
-import { Request as ExpressRequest } from "express";
 import { Body, Controller, Delete, Get, Patch, Path, Post, Request, Route, Security, Tags } from "tsoa";
 import { Inject } from "typescript-ioc";
 import { BaseEntity } from "../DTO/BaseEntity";
