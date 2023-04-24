@@ -16,14 +16,14 @@ export class User extends BaseEntity {
   id!: number;
 
   @Column()
-  lastName!: string;
+  lastname!: string;
 
   @Column()
-  firstName!: string;
+  firstname!: string;
 
   @Column()
   @IsDate()
-  birthDate!: Date;
+  birthdate!: Date;
 
   @Column()
   address!: string;
@@ -67,7 +67,7 @@ export class User extends BaseEntity {
   roles!: Role[];
 
   @OneToMany(() => Plant, plant => plant.user)
-  plantes!: Plant[];
+  plants!: Plant[];
 
   @OneToMany(type => Message, message => message.author)
   messages!: Message[];

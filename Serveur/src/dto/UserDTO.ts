@@ -1,15 +1,16 @@
 import { BaseEntity } from "./BaseEntity";
 import { ConversationDTO } from "./ConversationDTO";
 import { FileDTO } from "./FileDTO";
+import { MessageDTO } from "./MessageDTO";
 import { PlantDTO } from "./PlantDTO";
 import { RoleDTO } from "./RoleDTO";
 
 export interface UserDTO extends BaseEntity {
-    firstname: string,
     lastname: string,
+    firstname: string,
     birthdate: Date,
-    mail: string,
-    phone: string,
+    email: string,
+    phoneNumber: string,
     address: string,
     city: string,
     country: string,
@@ -18,8 +19,12 @@ export interface UserDTO extends BaseEntity {
     avatar: FileDTO,
     files: FileDTO[],
 
+    createdAt: Date,
+    updatedAt: Date,
+
+    messages: MessageDTO[],
     conversations: ConversationDTO[],
     plants: PlantDTO[],
-    roles:RoleDTO[],
-    last_connection: Date,
+    roles: RoleDTO[],
+    lastConnection: Date,
 }
