@@ -17,10 +17,18 @@ export class Plant extends BaseEntity {
   @Column()
   size!: number;
 
-  @Column()
+  @Column({
+    type: 'decimal',
+    precision: 10,
+    scale: 8,
+  })
   longitude!: number;
 
-  @Column()
+  @Column({
+    type: 'decimal',
+    precision: 9,
+    scale: 8,
+  })
   latitude!: number;
 
   @ManyToOne(() => User, user => user.plants, { onDelete: 'CASCADE' })
