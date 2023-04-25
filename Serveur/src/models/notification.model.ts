@@ -15,7 +15,7 @@ export class Notification extends BaseEntity {
   sendDate!: Date;
 
   @Column({ default: false })
-  isRead!: Date;
+  isRead!: boolean;
 
   @ManyToOne(() => User, user => user.notifications, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
