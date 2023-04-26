@@ -1,0 +1,84 @@
+    <div id="userProfileContainer" class="flex flex-col justify-center xl:justify-end items-center pt-0 xl:pt-20">
+      <p-card class="pa-4 w-11/12 h-3/4 overflow-y-scroll xl:w-2/4 xl:h-full xl:flex xl:flex-col xl:justify-end ma-4 mb-4">
+        <div class="flex flex-col justify-center items-center">
+          <div class="" [style]="{height:'200px',width:'200px','border-radius':'5px',border:'2px black solid'}">
+            <img [style]="{height:'100%'}" src="../../assets/images/background_login_2.png">
+          </div>
+          <h1 class=" text-xl md:text-2xl font-bold text-center mt-4">{{nomModel}} {{prenomModel}}</h1>
+        </div>
+        <div *ngIf="checked" class="flex flex-col items-start sm:items-center lg:flex-row justify-center mt-10">
+          <div class="flex flex-row m-4 text-sm	lg:text-xl ">
+            <span class="mr-2">Age :</span>
+            <p class="font-bold">{{ageModel}} ans</p>
+          </div>
+          <div class="flex flex-row m-4 text-sm	lg:text-xl">
+            <span class="mr-2">Adresse Postal :</span>
+            <p class="font-bold">{{addresseModel}}</p>
+          </div>
+        </div>
+        <div *ngIf="checked" class="flex flex-col items-start sm:items-center lg:flex-row justify-center">
+          <div class="flex flex-row m-4 text-sm	lg:text-xl ">
+            <span class="mr-2">Age :</span>
+            <p class="font-bold">{{ageModel}} ans</p>
+          </div>
+          <div class="flex flex-row m-4 text-sm	lg:text-xl">
+            <span class="mr-2">Adresse Postal :</span>
+            <p class="font-bold">{{addresseModel}}</p>
+          </div>
+        </div>
+        <div>
+          <div *ngIf="checked" class="flex flex-col mt-8 text-xl w-full">
+            <span class="mr-2 mb-4">Description :</span>
+            <textarea class="opacity-100 font-bold" rows="5" cols="90" pInputTextarea [autoResize]="true" [disabled]="true">{{descriptionModel}}</textarea>
+          </div>
+          <div *ngIf="!checked" class="flex flex-col lg:flex-row justify-center mt-10">
+            <div class="flex flex-col lg:flex-row mb-4 md:m-4 text-xl items-center ">
+              <span class="p-float-label">
+                  <input pInputText id="nomUser" [(ngModel)]="nomModelChange" />
+                  <label  htmlFor="nomUser">Nom</label>
+              </span>
+            </div>
+            <div class="flex flex-col lg:flex-row mb-4 md:m-4 text-xl items-center">
+              <span class="p-float-label">
+                  <input pInputText id="prenomUser" [(ngModel)]="prenomModelChange" />
+                  <label  htmlFor="prenomUser">Prenom</label>
+              </span>
+            </div>
+          </div>
+          <div *ngIf="!checked" class="flex flex-col lg:flex-row justify-center">
+            <div class="flex flex-col lg:flex-row mb-4 md:m-4 text-xl items-center ">
+              <span class="p-float-label">
+                  <input pInputText id="ageUser" [(ngModel)]="ageModelChange" />
+                  <label  htmlFor="ageUser">Age</label>
+              </span>
+            </div>
+            <div class="flex flex-col lg:flex-row md:m-4 text-xl items-center">
+              <span class="p-float-label">
+                  <input pInputText id="adresseUser" [(ngModel)]="addresseModelChange" />
+                  <label  htmlFor="adresseUser">Adresse</label>
+              </span>
+            </div>
+          </div>
+          <div *ngIf="!checked" class="flex flex-col mt-8 text-xl w-full">
+            <span class="mr-2 mb-4">Description :</span>
+            <textarea class="opacity-100 font-bold" rows="5" cols="90" pInputTextarea [autoResize]="true" [(ngModel)]="descriptionModel">{{descriptionModel}}</textarea>
+          </div>
+            <div>
+              <div class="my-8 flex flex-row md:justify-center justify-center items-start md:items-center">
+                <p-toggleButton id="toggleBtn" onLabel="Editer son profil"  offLabel="Annuler" [style]="{'background-color':'#03C988','border':'none'}" onIcon="pi pi-cog" offIcon="pi pi-times" class="p-button-lg" [(ngModel)]="checked"></p-toggleButton>
+                <div class="ml-4">
+                  <button *ngIf="!checked"  pButton pRipple label="Save" icon="pi pi-check" (click)="ChangeDataUser()"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </p-card>
+    </div>
+    <!--<p-card class="ml-4" [style]="{width: '44vw',height:'100%',border:'2px #03C988 solid','border-radius':'10px'}">
+      <div  class="flex flex-col">
+        <span class="font-bold m-4">18/02/2023 - Titre actualité </span>
+        <div class="ml-6">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Justo laoreet sit amet cursus sit amet dictum. Justo eget magna fermentum iaculis eu non diam. Bibendum enim facilisis gravida neque convallis a cras semper auctor. Leo a diam sollicitudin tempor id. Lectus arcu bibendum at varius. Cras sed felis eget velit aliquet sagittis. Malesuada pellentesque elit eget gravida cum sociis. In ornare quam viverra orci sagittis eu volutpat odio. Tristique sollicitudin nibh sit amet commodo nulla facilisi. Elementum pulvinar etiam non quam lacus suspendisse faucibus. Odio euismod lacinia at quis risus sed. Molestie at elementum eu facilisis sed odio morbi quis. Ut lectus arcu bibendum at varius vel pharetra. Dictum non consectetur a erat nam at lectus.</p>
+        </div>
+      </div>
+    </p-card>-->

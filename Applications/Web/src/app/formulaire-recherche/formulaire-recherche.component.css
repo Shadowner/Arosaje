@@ -1,0 +1,30 @@
+#formulaireContainer{
+  height:100vh;
+  width:100vw;
+}
+
+.p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled){
+  box-shadow: none !important;
+}
+
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link{
+  border-bottom-color: #2e9b74 !important;
+}
+
+.p-tabview-title{
+  color: #2e9b74;
+}
+
+.p-button{
+  background: #2e9b74;
+  border: 1px solid #2e9b74;
+}
+
+.p-button:hover{
+  background: #2e9b74;
+  border: 1px solid #2e9b74;
+}
+
+.p-button.p-element {
+  width:100%;
+}

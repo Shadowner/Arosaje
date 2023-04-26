@@ -1,0 +1,57 @@
+@import "primeng/resources/primeng.css";
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeicons/primeicons.css"; /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body  {
+  width: 100vw;
+  height: 100vh;
+}
+
+
+@font-face {
+  font-family: "Finger_Paint";
+  src: local("Finger_Paint"), url("./assets/fonts/FingerPaint-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Oregano";
+  src: local("Oregano"), url("./assets/fonts/Oregano-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "HandyCasual";
+  src: local("HandyCasual"), url("./assets/fonts/HandyCasualCondensed-Oblique.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Poppins-Bold";
+  src: local("Poppins-Bold"), url("./assets/fonts/Poppins-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Poppins";
+  src: local("Poppins"), url("./assets/fonts/Poppins-Regular.ttf") format("truetype");
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.Oregano{
+  font-family: "Oregano", Arial,Helvetica,sans-serif;
+}
+.HandyCasual{
+  font-family: "HandyCasual", Arial,Helvetica,sans-serif;
+}
+
+.Poppins-Bold{
+  font-family: "Poppins-Bold", Arial,Helvetica,sans-serif;
+}
+
+.Poppins{
+  font-family: "Poppins", Arial,Helvetica,sans-serif;
+}
+
+
+*{
+  font-family: Poppins;
+}

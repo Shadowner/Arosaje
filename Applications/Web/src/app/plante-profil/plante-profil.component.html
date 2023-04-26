@@ -1,0 +1,98 @@
+<div id="plant-profil-container" class=" ma-4 flex flex-row items-center">
+    <p-card style="width: 50%;" class="mx-4 h-4/5">
+      <ng-template pTemplate="header">
+        <div class="flex flex-col">
+          <div  class="self-center pt-4">
+            <img style="height: 125px" src="./assets/images/plant.png">
+          </div>
+          <h1 class="self-center text-3xl font-bold mt-4">{{namePlante}}</h1>
+
+        </div>
+      </ng-template>
+      <ng-template class="h-full" pTemplate="content">
+        <div>
+          <div *ngIf="checked" class="flex flex-row justify-center">
+            <div class="flex flex-row m-4 text-xl ">
+              <span class="mr-2">Famille botanique :</span>
+              <p class="font-bold">{{nomModel}}</p>
+            </div>
+            <div class="flex flex-row m-4 text-xl">
+              <span class="mr-2">Espece :</span>
+              <p class="font-bold">{{prenomModel}}</p>
+            </div>
+          </div>
+          <div *ngIf="checked" class="flex flex-row justify-center">
+            <div class="flex flex-row m-4 text-xl ">
+              <span class="mr-2">Résitance au froid :</span>
+              <p class="font-bold">{{ageModel}}</p>
+            </div>
+            <div class="flex flex-row m-4 text-xl">
+              <span class="mr-2">Adresse Postal :</span>
+              <p class="font-bold">{{addresseModel}}</p>
+            </div>
+          </div>
+          <div *ngIf="checked" class="flex flex-col mt-8 text-xl w-full">
+            <span class="mr-2 mb-4">Description :</span>
+            <textarea class="opacity-100 font-bold" rows="5" cols="90" pInputTextarea [autoResize]="true" [disabled]="true">{{descriptionModel}}</textarea>
+          </div>
+
+          <div *ngIf="!checked" class="flex flex-row justify-center ">
+            <div class="flex flex-row m-4 text-xl ">
+              <span class="p-float-label">
+                  <input pInputText id="nomUser" [value]="nomModel" [(ngModel)]="nomModelChange" />
+                  <label  htmlFor="nomUser">Famille Botanique</label>
+              </span>
+            </div>
+            <div class="flex flex-row m-4 text-xl">
+              <span class="p-float-label">
+                  <input pInputText id="prenomUser" [value]="prenomModel" [(ngModel)]="prenomModelChange" />
+                  <label  htmlFor="prenomUser">Espece de la plante</label>
+              </span>
+            </div>
+          </div>
+          <div *ngIf="!checked" class="flex flex-row justify-center">
+            <div class="flex flex-row m-4 text-xl ">
+              <span class="p-float-label">
+                  <input pInputText id="ageUser" [value]="ageModel" [(ngModel)]="ageModelChange" />
+                  <label  htmlFor="ageUser">Résistance au froid</label>
+              </span>
+            </div>
+            <div class="flex flex-row m-4 text-xl">
+              <span class="p-float-label">
+                  <input pInputText id="adresseUser" [value]="addresseModel" [(ngModel)]="addresseModelChange" />
+                  <label  htmlFor="adresseUser">Adresse</label>
+              </span>
+            </div>
+          </div>
+          <div *ngIf="!checked" class="flex flex-col mt-8 text-xl w-full">
+            <span class="mr-2 mb-4">Description :</span>
+            <textarea class="opacity-100 font-bold" rows="5" cols="90" pInputTextarea [autoResize]="true" [(ngModel)]="descriptionModel">{{descriptionModel}}</textarea>
+          </div>
+          <div>
+            <div class="my-8 flex flex-row justify-center">
+              <p-toggleButton id="toggleBtn" onLabel="Editer son profil"  offLabel="Annuler" [style]="{'background-color':'#03C988','border':'none'}" onIcon="pi pi-cog" offIcon="pi pi-times" class="p-button-lg" [(ngModel)]="checked"></p-toggleButton>
+              <div class="ml-4">
+                <button *ngIf="!checked"  pButton pRipple label="Save" icon="pi pi-check" (click)="ChangeDataUser()"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-card>
+    <p-card style="width: 50%;" class="mx-4 flex h-4/5 overflow-hidden">
+        <span class="font-bold m-4">18/02/2023 - Titre actualité </span>
+        <div class="ml-6 my-4">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Justo laoreet sit amet cursus sit amet dictum. Justo eget magna fermentum iaculis eu non diam. Bibendum enim facilisis gravida neque convallis a cras semper auctor. Leo a diam sollicitudin tempor id. Lectus arcu bibendum at varius. Cras sed felis eget velit aliquet sagittis. Malesuada pellentesque elit eget gravida cum sociis. In ornare quam viverra orci sagittis eu volutpat odio. Tristique sollicitudin nibh sit amet commodo nulla facilisi. Elementum pulvinar etiam non quam lacus suspendisse faucibus. Odio euismod lacinia at quis risus sed. Molestie at elementum eu facilisis sed odio morbi quis. Ut lectus arcu bibendum at varius vel pharetra. Dictum non consectetur a erat nam at lectus.</p>
+        </div>
+        <span class="font-bold m-4">18/02/2023 - Titre actualité </span>
+        <div class="ml-6 my-4">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Justo laoreet sit amet cursus sit amet dictum. Justo eget magna fermentum iaculis eu non diam. Bibendum enim facilisis gravida neque convallis a cras semper auctor. Leo a diam sollicitudin tempor id. Lectus arcu bibendum at varius. Cras sed felis eget velit aliquet sagittis. Malesuada pellentesque elit eget gravida cum sociis. In ornare quam viverra orci sagittis eu volutpat odio. Tristique sollicitudin nibh sit amet commodo nulla facilisi. Elementum pulvinar etiam non quam lacus suspendisse faucibus. Odio euismod lacinia at quis risus sed. Molestie at elementum eu facilisis sed odio morbi quis. Ut lectus arcu bibendum at varius vel pharetra. Dictum non consectetur a erat nam at lectus.</p>
+        </div>
+        <span class="font-bold m-4">18/02/2023 - Titre actualité </span>
+        <div class="ml-6 my-4">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Justo laoreet sit amet cursus sit amet dictum. Justo eget magna fermentum iaculis eu non diam. Bibendum enim facilisis gravida neque convallis a cras semper auctor. Leo a diam sollicitudin tempor id. Lectus arcu bibendum at varius. Cras sed felis eget velit aliquet sagittis. Malesuada pellentesque elit eget gravida cum sociis. In ornare quam viverra orci sagittis eu volutpat odio. Tristique sollicitudin nibh sit amet commodo nulla facilisi. Elementum pulvinar etiam non quam lacus suspendisse faucibus. Odio euismod lacinia at quis risus sed. Molestie at elementum eu facilisis sed odio morbi quis. Ut lectus arcu bibendum at varius vel pharetra. Dictum non consectetur a erat nam at lectus.</p>
+        </div>
+
+    </p-card>
+</div>
+
