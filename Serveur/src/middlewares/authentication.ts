@@ -35,7 +35,16 @@ export async function expressAuthentication(
                     }
                 }
 
-                const user = await User.findOneBy({ id: decoded.id });
+                const user = await User.findOne(
+                    {
+                        where: {
+                            id: decoded.id
+                        },
+                        relations: {
+                            roles: true
+                        }
+                    }
+                );
                 if (!user)
                     return rej(new InvalidToken());
                 return res(user);
