@@ -3,9 +3,13 @@
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute, HttpStatusCodeLiteral, TsoaResponse, fetchMiddlewares } from '@tsoa/runtime';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { BotanisteController } from './../controllers/botaniste.controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { ConversationController } from './../controllers/conversation.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { FileController } from './../controllers/file.controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { GuardController } from './../controllers/guard.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { MessageController } from './../controllers/message.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -96,8 +100,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "user": {"ref":"UserDTO","required":true},
-            "conversations": {"ref":"ConversationDTO","required":true},
+            "userId": {"dataType":"string","required":true},
+            "conversationIds": {"dataType":"array","array":{"dataType":"double"},"required":true},
             "name": {"dataType":"string","required":true},
             "type": {"dataType":"string","required":true},
             "description": {"dataType":"string","required":true},
@@ -117,34 +121,30 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Partial_Omit_ConversationDTO.keyof(BaseEntity)__": {
-        "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"messages":{"dataType":"array","array":{"dataType":"refObject","ref":"MessageDTO"}},"nom":{"dataType":"string"},"creationDate":{"dataType":"datetime"},"users":{"dataType":"array","array":{"dataType":"refObject","ref":"UserDTO"}}},"validators":{}},
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Partial_Omit_FileDTO.keyof(BaseEntity)__": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"url":{"dataType":"string"},"owner":{"ref":"UserDTO"},"shared":{"dataType":"array","array":{"dataType":"refObject","ref":"UserDTO"}},"name":{"dataType":"string"}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"name":{"dataType":"string"},"url":{"dataType":"string"},"owner":{"ref":"UserDTO"},"shared":{"dataType":"array","array":{"dataType":"refObject","ref":"UserDTO"}}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Partial_Omit_FileDTO.keyof(BaseEntity)-or-flags__": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"url":{"dataType":"string"},"owner":{"ref":"UserDTO"},"shared":{"dataType":"array","array":{"dataType":"refObject","ref":"UserDTO"}},"name":{"dataType":"string"}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"name":{"dataType":"string"},"url":{"dataType":"string"},"owner":{"ref":"UserDTO"},"shared":{"dataType":"array","array":{"dataType":"refObject","ref":"UserDTO"}}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Partial_Omit_MessageDTO.keyof(BaseEntity)__": {
+    "Partial_PlantCreate_": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"user":{"dataType":"array","array":{"dataType":"refObject","ref":"UserDTO"}},"data":{"dataType":"string"},"date":{"dataType":"datetime"}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"name":{"dataType":"string"},"type":{"dataType":"string"},"description":{"dataType":"string"},"size":{"dataType":"string"}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Partial_Omit_PlantDTO.keyof(BaseEntity)__": {
-        "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"name":{"dataType":"string"},"user":{"ref":"UserDTO"},"conversations":{"ref":"ConversationDTO"},"type":{"dataType":"string"},"description":{"dataType":"string"},"size":{"dataType":"string"},"guards":{"dataType":"array","array":{"dataType":"refObject","ref":"GuardDTO"}}},"validators":{}},
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Partial_Omit_PlantDTO.keyof(BaseEntity)-or-flags__": {
-        "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"name":{"dataType":"string"},"user":{"ref":"UserDTO"},"conversations":{"ref":"ConversationDTO"},"type":{"dataType":"string"},"description":{"dataType":"string"},"size":{"dataType":"string"},"guards":{"dataType":"array","array":{"dataType":"refObject","ref":"GuardDTO"}}},"validators":{}},
+    "PlantCreate": {
+        "dataType": "refObject",
+        "properties": {
+            "name": {"dataType":"string","required":true},
+            "type": {"dataType":"string","required":true},
+            "description": {"dataType":"string","required":true},
+            "size": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Partial_Omit_RoleDTO.keyof(BaseEntity)__": {
@@ -184,7 +184,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Partial_Omit_UserDTO.keyof(BaseEntity)__": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"conversations":{"dataType":"array","array":{"dataType":"refObject","ref":"ConversationDTO"}},"lastname":{"dataType":"string"},"firstname":{"dataType":"string"},"birthdate":{"dataType":"datetime"},"address":{"dataType":"string"},"city":{"dataType":"string"},"country":{"dataType":"string"},"password":{"dataType":"string"},"avatar":{"dataType":"string"},"roles":{"dataType":"array","array":{"dataType":"refObject","ref":"RoleDTO"}},"plants":{"dataType":"array","array":{"dataType":"refObject","ref":"PlantDTO"}},"mail":{"dataType":"string"},"phone":{"dataType":"string"},"files":{"dataType":"array","array":{"dataType":"refObject","ref":"FileDTO"}},"last_connection":{"dataType":"datetime"}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"files":{"dataType":"array","array":{"dataType":"refObject","ref":"FileDTO"}},"lastname":{"dataType":"string"},"firstname":{"dataType":"string"},"birthdate":{"dataType":"datetime"},"address":{"dataType":"string"},"city":{"dataType":"string"},"country":{"dataType":"string"},"password":{"dataType":"string"},"avatar":{"dataType":"string"},"roles":{"dataType":"array","array":{"dataType":"refObject","ref":"RoleDTO"}},"plants":{"dataType":"array","array":{"dataType":"refObject","ref":"PlantDTO"}},"conversations":{"dataType":"array","array":{"dataType":"refObject","ref":"ConversationDTO"}},"mail":{"dataType":"string"},"phone":{"dataType":"string"},"last_connection":{"dataType":"datetime"}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
@@ -197,14 +197,16 @@ export function RegisterRoutes(app: Router) {
     //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
-        app.patch('/conversation/update',
+        app.get('/botaniste/query',
             authenticateMiddleware([{"jwt":[]}]),
-            ...(fetchMiddlewares<RequestHandler>(ConversationController)),
-            ...(fetchMiddlewares<RequestHandler>(ConversationController.prototype.update)),
+            ...(fetchMiddlewares<RequestHandler>(BotanisteController)),
+            ...(fetchMiddlewares<RequestHandler>(BotanisteController.prototype.query)),
 
-            function ConversationController_update(request: any, response: any, next: any) {
+            function BotanisteController_query(request: any, response: any, next: any) {
             const args = {
-                    updateObj: {"in":"body","name":"updateObj","required":true,"ref":"Partial_Omit_ConversationDTO.keyof(BaseEntity)__"},
+                    query: {"in":"query","name":"query","dataType":"string"},
+                    lastId: {"in":"query","name":"lastId","dataType":"double"},
+                    max: {"in":"query","name":"max","dataType":"double"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -213,10 +215,10 @@ export function RegisterRoutes(app: Router) {
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
 
-                const controller = new ConversationController();
+                const controller = new BotanisteController();
 
 
-              const promise = controller.update.apply(controller, validatedArgs as any);
+              const promise = controller.query.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
@@ -256,7 +258,8 @@ export function RegisterRoutes(app: Router) {
 
             function ConversationController_fetchById(request: any, response: any, next: any) {
             const args = {
-                    id: {"in":"path","name":"id","required":true,"dataType":"string"},
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -282,8 +285,9 @@ export function RegisterRoutes(app: Router) {
 
             function ConversationController_sendNewMessage(request: any, response: any, next: any) {
             const args = {
-                    id: {"in":"path","name":"id","required":true,"dataType":"string"},
-                    messageDTO: {"in":"body","name":"messageDTO","required":true,"ref":"MessageDTO"},
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+                    content: {"in":"body","name":"content","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"content":{"dataType":"string","required":true}}},
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -460,14 +464,41 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.patch('/message/update',
+        app.get('/guard/start/:id',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(GuardController)),
+            ...(fetchMiddlewares<RequestHandler>(GuardController.prototype.fetchAll)),
+
+            function GuardController_fetchAll(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new GuardController();
+
+
+              const promise = controller.fetchAll.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.patch('/message/:id/update',
             authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(MessageController)),
             ...(fetchMiddlewares<RequestHandler>(MessageController.prototype.update)),
 
             function MessageController_update(request: any, response: any, next: any) {
             const args = {
-                    updateObj: {"in":"body","name":"updateObj","required":true,"ref":"Partial_Omit_MessageDTO.keyof(BaseEntity)__"},
+                    content: {"in":"body","name":"content","required":true,"dataType":"string"},
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -493,7 +524,8 @@ export function RegisterRoutes(app: Router) {
 
             function MessageController_delete(request: any, response: any, next: any) {
             const args = {
-                    id: {"in":"path","name":"id","required":true,"dataType":"string"},
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -545,7 +577,8 @@ export function RegisterRoutes(app: Router) {
 
             function MessageController_fetchById(request: any, response: any, next: any) {
             const args = {
-                    id: {"in":"path","name":"id","required":true,"dataType":"string"},
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -564,14 +597,16 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.patch('/plant/update',
+        app.patch('/plant/update/:id',
             authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(PlantController)),
             ...(fetchMiddlewares<RequestHandler>(PlantController.prototype.update)),
 
             function PlantController_update(request: any, response: any, next: any) {
             const args = {
-                    updateObj: {"in":"body","name":"updateObj","required":true,"ref":"Partial_Omit_PlantDTO.keyof(BaseEntity)__"},
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+                    updateObj: {"in":"body","name":"updateObj","required":true,"ref":"Partial_PlantCreate_"},
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -597,7 +632,8 @@ export function RegisterRoutes(app: Router) {
 
             function PlantController_delete(request: any, response: any, next: any) {
             const args = {
-                    id: {"in":"path","name":"id","required":true,"dataType":"string"},
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -623,7 +659,8 @@ export function RegisterRoutes(app: Router) {
 
             function PlantController_fetchById(request: any, response: any, next: any) {
             const args = {
-                    id: {"in":"path","name":"id","required":true,"dataType":"string"},
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -673,6 +710,7 @@ export function RegisterRoutes(app: Router) {
 
             function PlantController_fetchAll(request: any, response: any, next: any) {
             const args = {
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -718,8 +756,34 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/plant/create',
+            ...(fetchMiddlewares<RequestHandler>(PlantController)),
+            ...(fetchMiddlewares<RequestHandler>(PlantController.prototype.create)),
+
+            function PlantController_create(request: any, response: any, next: any) {
+            const args = {
+                    plant: {"in":"body","name":"plant","required":true,"ref":"PlantCreate"},
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PlantController();
+
+
+              const promise = controller.create.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/role/update',
-            authenticateMiddleware([{"jwt":["role_edition"]}]),
+            authenticateMiddleware([{"jwt":["admin"]}]),
             ...(fetchMiddlewares<RequestHandler>(RoleController)),
             ...(fetchMiddlewares<RequestHandler>(RoleController.prototype.update)),
 
@@ -745,7 +809,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/role/:id',
-            authenticateMiddleware([{"jwt":["role_deletion"]}]),
+            authenticateMiddleware([{"jwt":["admin"]}]),
             ...(fetchMiddlewares<RequestHandler>(RoleController)),
             ...(fetchMiddlewares<RequestHandler>(RoleController.prototype.delete)),
 

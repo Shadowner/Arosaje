@@ -1,6 +1,7 @@
 import * as express from "express";
 import * as jwt from "jsonwebtoken";
 import { InvalidToken } from "../errors/user/InvalidToken";
+import { BlacklistedJwt } from "../models/blacklistedJwt.model";
 import { User } from "../models/user.model";
 
 export async function expressAuthentication(
@@ -15,11 +16,15 @@ export async function expressAuthentication(
         if (!token || token instanceof Array)
             throw new Error("No valid token provided");
 
-        return new Promise((res, rej) => {
-            //TODO: Fetch un vrai Secret
+        return new Promise(async (res, rej) => {
+
+            if (await BlacklistedJwt.findOneBy({ token })) {
+                return rej(new InvalidToken());
+            }
+
             jwt.verify(token, process.env.JWT_SECRET!, async (err, decoded: any) => {
                 if (err)
-                    throw err;
+                    rej(err);
                 if (scopes && scopes.length > 0) {
                     if ((!decoded.scopes || decoded.scopes.length === 0))
                         return rej(new Error("JWT does not contain required scope."));
@@ -32,7 +37,7 @@ export async function expressAuthentication(
 
                 const user = await User.findOneBy({ id: decoded.id });
                 if (!user)
-                    throw new InvalidToken();
+                    return rej(new InvalidToken());
                 return res(user);
             });
         });

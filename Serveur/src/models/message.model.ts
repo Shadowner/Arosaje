@@ -12,7 +12,7 @@ export class Message extends BaseEntity {
   @Column()
   content!: string;
 
-  @Column()
+  @Column({ default: () => 'CURRENT_TIMESTAMP' })
   @IsDate()
   sendDate!: Date;
 

@@ -1,16 +1,21 @@
 import { BaseEntity } from "./BaseEntity";
 import { ConversationDTO } from "./ConversationDTO";
 import { GuardDTO } from "./GuardDTO";
-import { UserDTO } from "./UserDTO";
 
 export interface PlantDTO extends BaseEntity {
-    user: UserDTO,
-    conversations: ConversationDTO,
+    userId: string,
+    conversationIds: number[],
     name: string,
-    type:string,
-    description:string,
-    size:string,
+    type: string,
+    description: string,
+    size: string,
 
-    guards:GuardDTO[],
+    guards: GuardDTO[],
+}
 
+export interface PlantCreate {
+    name: string,
+    type: string,
+    description: string,
+    size: string,
 }

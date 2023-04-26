@@ -24,6 +24,7 @@ export class JWTServices {
         });
         return token;
     }
+
     public verifyToken(token: string) {
         try {
             const decoded = verify(token, this.jwtSecret);
@@ -32,5 +33,18 @@ export class JWTServices {
         catch (err) {
             throw new InvalidToken();
         }
+    }
+
+    public getTokenEpirationDate(token: string) {
+        const decoded = this.verifyToken(token);
+        if (typeof decoded === 'string') {
+            return new Date(0);
+        }
+
+        if (decoded.exp === undefined) {
+            return new Date(0);
+        }
+
+        return new Date(decoded.exp);
     }
 }

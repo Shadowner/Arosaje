@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, ManyToMany, JoinTable, OneToMany, CreateDateColumn, UpdateDateColumn, BeforeInsert } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, ManyToMany, JoinTable, OneToMany, CreateDateColumn, UpdateDateColumn, BeforeInsert, AfterLoad, AfterInsert, AfterUpdate } from 'typeorm';
 import {
   Length,
   IsEmail,
@@ -123,4 +123,24 @@ export class User extends BaseEntity {
     }
   }
 
+  @AfterLoad()
+  @AfterInsert()
+  @AfterUpdate()
+  async nullChecks() {
+    if (!this.conversations) {
+      this.conversations = []
+    }
+    if (!this.plants) {
+      this.plants = []
+    }
+    if (!this.roles) {
+      this.roles = []
+    }
+    if (!this.messages) {
+      this.messages = []
+    }
+    if (!this.notifications) {
+      this.notifications = []
+    }
+  }
 }

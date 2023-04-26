@@ -51,7 +51,15 @@ export class UserController extends Controller {
 
     @Post("logout")
     public async logout(@Request() request: ExpressRequest) {
-        // TODO
+        const token = request.header('x-access-token');
+        if (!token) {
+            this.setStatus(401);
+            return {
+                error: "No token provided."
+            }
+        }
+
+        await this.userService.logout(token);
     }
 
 

@@ -3,14 +3,10 @@ import { Body, Controller, Delete, FormField, Get, Patch, Path, Post, Request, R
 import { Inject } from "typescript-ioc";
 import { BaseEntity } from "../DTO/BaseEntity";
 import { FileDTO } from "../DTO/FileDTO";
-import { FileService } from "../services/file.service";
 
 @Tags("File")
 @Route("file")
 export class FileController extends Controller {
-
-    @Inject
-    private fileService!: FileService;
 
     @Security("jwt", ["file_edition"])
     @Patch("update")

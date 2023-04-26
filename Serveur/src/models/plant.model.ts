@@ -1,7 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, ManyToOne, JoinColumn, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, ManyToOne, JoinColumn, ManyToMany, JoinTable, AfterLoad, AfterInsert, AfterUpdate } from 'typeorm';
 import { User } from './user.model';
 import { File } from './file.model';
 import { PlantType } from './plantType.model';
+import { Guard } from './guard.model';
 
 @Entity()
 export class Plant extends BaseEntity {
@@ -43,6 +44,14 @@ export class Plant extends BaseEntity {
   })
   files!: File[];
 
+  @ManyToMany(type => Guard, { onDelete: 'CASCADE' })
+  @JoinTable({
+    name: "plant_guard",
+    joinColumns: [{ name: "plantId" }],
+    inverseJoinColumns: [{ name: "guardId" }]
+  })
+  guards!: Guard[];
+
   @ManyToOne(() => PlantType)
   @JoinColumn({ name: 'plantTypeId' })
   plantType!: PlantType;
@@ -56,5 +65,17 @@ export class Plant extends BaseEntity {
       userId: this.user.id,
       plantType: this.plantType.id,
     };
+  }
+
+  @AfterLoad()
+  @AfterInsert()
+  @AfterUpdate()
+  async nullChecks() {
+    if (!this.files) {
+      this.files = [];
+    }
+    if (!this.guards) {
+      this.guards = [];
+    }
   }
 }

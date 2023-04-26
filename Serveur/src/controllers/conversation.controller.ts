@@ -1,22 +1,17 @@
-import { Body, Controller, Delete, Get, Patch, Path, Post, Request, Route, Security, Tags } from "tsoa";
+import { ExpressRequestWithUser } from "../interfaces/ExpressJwt";
+import { Conversation } from "../models/conversation.model";
+import { Body, Controller, Delete, Get, Middlewares, Patch, Path, Post, Request, Route, Security, Tags } from "tsoa";
 import { Inject } from "typescript-ioc";
-import { BaseEntity } from "../DTO/BaseEntity";
-import { ConversationDTO } from "../DTO/ConversationDTO";
-import { MessageDTO } from "../DTO/MessageDTO";
-import { ConversationService } from "../services/conversation.service";
+import { Response } from "express";
+import { Message } from "../models/message.model";
 
+function testMiddleWare(request: ExpressRequestWithUser, res: Response, next: () => Promise<any>) {
+    console.log('Je suis un middleware');
+    next();
+}
 @Tags("Conversation")
 @Route("conversation")
 export class ConversationController extends Controller {
-
-    @Inject
-    private conversationService!: ConversationService;
-
-    @Security("jwt")
-    @Patch("update")
-    public async update(@Body() updateObj: Partial<Omit<ConversationDTO, keyof (BaseEntity)>>) {
-        //TODO : Vérifier perm si pas son conversation
-    }
 
     @Security("jwt")
     @Delete("{id}/delete")
@@ -25,18 +20,45 @@ export class ConversationController extends Controller {
 
     }
 
+    @Middlewares(testMiddleWare)
     @Security("jwt")
     @Get("{id}")
-    public async fetchById(@Path() id: string) {
-        //TODO : Vérifier perm fetch l'id
+    public async fetchById(@Path() id: number, @Request() request: ExpressRequestWithUser) {
+        const user = request.user;
 
+        if (!user.conversations.find((conversation: Conversation) => conversation.id === id)) {
+            throw new Error('You are not in this conversation');
+        }
+
+        const conversation = await Conversation.findOneBy({ id });
+        if (!conversation) {
+            throw new Error('Conversation not found');
+        }
+
+        return conversation.toObject();
     }
 
     @Security("jwt")
     @Post("{id}/message/send")
-    public async sendNewMessage(@Path() id: string, @Body() messageDTO: MessageDTO) {
-        //TODO : Vérifier perm fetch l'id
+    public async sendNewMessage(@Path() id: number, @Body() content: { content: string }, @Request() request: ExpressRequestWithUser) {
+        const user = request.user;
 
+        if (!user.conversations.find((conversation: Conversation) => conversation.id === id)) {
+            throw new Error('You are not in this conversation');
+        }
+
+        const conversation = await Conversation.findOneBy({ id });
+        if (!conversation) {
+            throw new Error('Conversation not found');
+        }
+
+        const message = new Message();
+        message.content = content.content;
+        message.author = user;
+        message.conversation = conversation;
+        await message.save();
+
+        return message.toObject();
     }
 
     constructor() {

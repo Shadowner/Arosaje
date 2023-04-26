@@ -21,6 +21,11 @@ export class Conversation extends BaseEntity {
   })
   participants!: User[];
 
+  public async sendMessage(message: Message) {
+    this.messages.push(message);
+    await this.save();
+  }
+
   public toObject() {
     return {
       id: this.id,
