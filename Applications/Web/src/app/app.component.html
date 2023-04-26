@@ -1,7 +1,16 @@
 <div id="appContainer">
-  <p-menubar id="menuBar" [ngStyle]="{'width': '100%','position': 'fixed'}" [model]="items">
+  <p-menubar
+    id="menuBar"
+    [ngStyle]="{ width: '100%', position: 'fixed' }"
+    [model]="items"
+  >
     <ng-template pTemplate="start">
-      <img src="../assets/A'ROSAJE_logo_favicon.png" (click)="goToDashBoard()" style="cursor:pointer" class="mr-2 h-10" />
+      <img
+        src="../assets/A'ROSAJE_logo_favicon.png"
+        (click)="goToDashBoard()"
+        style="cursor: pointer"
+        class="mr-2 h-10"
+      />
     </ng-template>
   </p-menubar>
   <router-outlet></router-outlet>

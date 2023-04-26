@@ -1,3 +1,7 @@
+#MessagerieContainer {
+  height: 100vh;
+  width: 100vw;
+}
 /* Add application styles & imports to this file! */
 body {
   display: flex;
@@ -8,7 +12,7 @@ body {
   font-family: "proxima-nova", "Source Sans Pro", sans-serif;
   font-size: 1em;
   letter-spacing: 0.1px;
-  color: #32465a;
+  color: rgb(46, 155, 116);
   text-rendering: optimizeLegibility;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
   -webkit-font-smoothing: antialiased;
@@ -568,7 +572,6 @@ span.status-circle:before {
   float: right;
   width: 60%;
   height: 100%;
-  overflow: hidden;
   position: relative;
 }
 @media screen and (max-width: 735px) {
@@ -669,7 +672,7 @@ span.status-circle:before {
   }
 }
 #frame .content .message-input {
-  position: absolute;
+  position: inherit;
   bottom: 0;
   width: 100%;
   z-index: 99;

@@ -30,10 +30,10 @@ export const RANDOM_MSGS = [
 
 export const TYPE_OF_MSG: any = ["replies", "sent"];
 
-export const getRandom = items =>
+export const getRandom = (items: string | any[]) =>
   items[Math.floor(Math.random() * items.length)];
 
-export function generateMessage(length) {
+export function generateMessage(length: number) {
   return Array.from({ length }).map(
     () => new Message(getRandom(TYPE_OF_MSG), getRandom(RANDOM_MSGS))
   );
@@ -66,15 +66,4 @@ export const USERS = [
     "http://emilcarlsson.se/assets/donnapaulsen.png",
     generateMessage(11)
   ),
-  new User(
-    "Client 5",
-    STATUSES.OFFLINE,
-    "http://emilcarlsson.se/assets/jessicapearson.png"
-  ),
-  new User(
-    "Client 6",
-    STATUSES.BUSY,
-    "http://emilcarlsson.se/assets/haroldgunderson.png",
-    generateMessage(4)
-  )
 ];

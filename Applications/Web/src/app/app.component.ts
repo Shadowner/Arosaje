@@ -20,29 +20,6 @@ export class AppComponent {
         routerLink:['/search'],
       },
       {
-        label:'Edit',
-        icon:'pi pi-fw pi-pencil',
-        items:[
-          {
-            label:'Left',
-            icon:'pi pi-fw pi-align-left'
-          },
-          {
-            label:'Right',
-            icon:'pi pi-fw pi-align-right'
-          },
-          {
-            label:'Center',
-            icon:'pi pi-fw pi-align-center'
-          },
-          {
-            label:'Justify',
-            icon:'pi pi-fw pi-align-justify'
-          },
-
-        ]
-      },
-      {
         label: "Mon Jardin",
         icon:"pi pi-fw pi-sun",
         routerLink: ['/garden']
