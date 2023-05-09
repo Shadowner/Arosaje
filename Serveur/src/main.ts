@@ -86,3 +86,6 @@ io.on("connection", () => {
 // Run server
 server.listen(PORT);
 httpsServer.listen(4443)
+
+// Export app
+export default app;
