@@ -3,6 +3,7 @@ export interface IUserJWT {
     id: number;
     iat: number;
     exp: number;
-
+    roles: string[];
+    
     // TODO: Voir si je rajoute les roles utilisateur
 }

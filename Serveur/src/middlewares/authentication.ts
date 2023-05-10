@@ -7,7 +7,7 @@ import { User } from "../models/user.model";
 export async function expressAuthentication(
     request: express.Request,
     securityName: string,
-    scopes?: string[]
+    roles?: string[]
 ): Promise<any> {
     if (securityName === "jwt") {
         //TODO: Je fais mes tests par rapport à un JWT
@@ -25,12 +25,12 @@ export async function expressAuthentication(
             jwt.verify(token, process.env.JWT_SECRET!, async (err, decoded: any) => {
                 if (err)
                     rej(err);
-                if (scopes && scopes.length > 0) {
+                if (roles && roles.length > 0) {
                     if ((!decoded.scopes || decoded.scopes.length === 0))
                         return rej(new Error("JWT does not contain required scope."));
 
-                    for (let scope of scopes) {
-                        if (!decoded.scopes.includes(scope))
+                    for (let role of roles) {
+                        if (!decoded.scopes.includes(role))
                             return rej(new Error("JWT does not contain required scope."));
                     }
                 }

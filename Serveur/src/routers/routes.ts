@@ -182,9 +182,9 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Partial_Omit_UserDTO.keyof(BaseEntity)__": {
+    "Partial_UserCreate_": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"files":{"dataType":"array","array":{"dataType":"refObject","ref":"FileDTO"}},"lastname":{"dataType":"string"},"firstname":{"dataType":"string"},"birthdate":{"dataType":"datetime"},"address":{"dataType":"string"},"city":{"dataType":"string"},"country":{"dataType":"string"},"password":{"dataType":"string"},"avatar":{"dataType":"string"},"roles":{"dataType":"array","array":{"dataType":"refObject","ref":"RoleDTO"}},"plants":{"dataType":"array","array":{"dataType":"refObject","ref":"PlantDTO"}},"conversations":{"dataType":"array","array":{"dataType":"refObject","ref":"ConversationDTO"}},"mail":{"dataType":"string"},"phone":{"dataType":"string"},"last_connection":{"dataType":"datetime"}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"lastname":{"dataType":"string"},"firstname":{"dataType":"string"},"birthdate":{"dataType":"datetime"},"address":{"dataType":"string"},"city":{"dataType":"string"},"country":{"dataType":"string"},"email":{"dataType":"string"},"phoneNumber":{"dataType":"string"},"password":{"dataType":"string"}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
@@ -991,7 +991,8 @@ export function RegisterRoutes(app: Router) {
 
             function UserController_update(request: any, response: any, next: any) {
             const args = {
-                    updateObj: {"in":"body","name":"updateObj","required":true,"ref":"Partial_Omit_UserDTO.keyof(BaseEntity)__"},
+                    updateObj: {"in":"body","name":"updateObj","required":true,"ref":"Partial_UserCreate_"},
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -1010,13 +1011,14 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.post('/user/test',
+        app.patch('/user/phone',
             authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(UserController)),
-            ...(fetchMiddlewares<RequestHandler>(UserController.prototype.test)),
+            ...(fetchMiddlewares<RequestHandler>(UserController.prototype.phone)),
 
-            function UserController_test(request: any, response: any, next: any) {
+            function UserController_phone(request: any, response: any, next: any) {
             const args = {
+                    updateObj: {"in":"body","name":"updateObj","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"phone":{"dataType":"string","required":true}}},
                     req: {"in":"request","name":"req","required":true,"dataType":"object"},
             };
 
@@ -1029,21 +1031,98 @@ export function RegisterRoutes(app: Router) {
                 const controller = new UserController();
 
 
-              const promise = controller.test.apply(controller, validatedArgs as any);
+              const promise = controller.phone.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.delete('/user/:id',
+        app.get('/user/phone/confirm/:code',
+            ...(fetchMiddlewares<RequestHandler>(UserController)),
+            ...(fetchMiddlewares<RequestHandler>(UserController.prototype.confirmPhone)),
+
+            function UserController_confirmPhone(request: any, response: any, next: any) {
+            const args = {
+                    code: {"in":"path","name":"code","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new UserController();
+
+
+              const promise = controller.confirmPhone.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.patch('/user/email',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(UserController)),
+            ...(fetchMiddlewares<RequestHandler>(UserController.prototype.email)),
+
+            function UserController_email(request: any, response: any, next: any) {
+            const args = {
+                    updateObj: {"in":"body","name":"updateObj","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"email":{"dataType":"string","required":true}}},
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new UserController();
+
+
+              const promise = controller.email.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/user/email/confirm/:token',
+            ...(fetchMiddlewares<RequestHandler>(UserController)),
+            ...(fetchMiddlewares<RequestHandler>(UserController.prototype.confirmEmail)),
+
+            function UserController_confirmEmail(request: any, response: any, next: any) {
+            const args = {
+                    token: {"in":"path","name":"token","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new UserController();
+
+
+              const promise = controller.confirmEmail.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/user/delete',
             authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(UserController)),
             ...(fetchMiddlewares<RequestHandler>(UserController.prototype.delete)),
 
             function UserController_delete(request: any, response: any, next: any) {
             const args = {
-                    id: {"in":"path","name":"id","required":true,"dataType":"string"},
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

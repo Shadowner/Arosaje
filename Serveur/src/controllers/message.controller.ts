@@ -8,7 +8,7 @@ import { Message } from "../models/message.model";
 export class MessageController extends Controller {
 
 
-    @Security("jwt")
+    @Security("jwt", ["admin"])
     @Patch("{id}/update")
     public async update(@Body() content: string, @Path() id: number, @Request() request: ExpressRequestWithUser) {
         const user = request.user;

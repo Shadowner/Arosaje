@@ -19,32 +19,11 @@ export class UserService {
     private jwtService!: JWTServices;
 
     public async register(user: UserCreate) {
-        const potentialUser = await User.findBy({
-            'email': user.email
-        });
 
-        if (potentialUser.length > 0) {
-            throw new UserAlreadyExist();
-        }
-        const instanciedUser = User.create({ ...user });
-        return instanciedUser.save();
     }
 
     public async login(credential: ILoginCredentials) {
-        const potentialUser = await User.findBy({
-            'email': credential.email
-        });
 
-        if (potentialUser.length === 0) {
-            throw new UserNotExist();
-        }
-        const user = potentialUser[0];
-
-        if (await compare(credential.password, user.password)) {
-            return user;
-        }
-
-        throw new UserNotExist();
     }
 
     public async logout(token: string) {

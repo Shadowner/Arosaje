@@ -34,6 +34,9 @@ export class User extends BaseEntity {
   lastname!: string;
 
   @Column()
+  username!: string;
+
+  @Column()
   firstname!: string;
 
   @Column()
@@ -47,6 +50,9 @@ export class User extends BaseEntity {
   city!: string;
 
   @Column()
+  twoFactorEnabled!: boolean;
+
+  @Column()
   country!: string;
 
   @Column({
@@ -55,10 +61,17 @@ export class User extends BaseEntity {
   @IsEmail()
   email!: string;
 
+  @IsEmail()
+  tmpEmail!: string | null;
+
+
   @Column()
   @Length(0, 10)
   phoneNumber!: string;
 
+  @Column()
+  @Length(0, 10)
+  tmpPhoneNumber!: string | null;
   @Column()
   password!: string;
 
