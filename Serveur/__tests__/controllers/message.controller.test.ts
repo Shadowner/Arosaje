@@ -2,7 +2,7 @@ import request from "supertest";
 
 const baseURL = "http://localhost:8080"
 
-describe("RoleController", () => {
+describe("MessageController", () => {
   let userTokenJWT: string;
 
   beforeAll(async () => {
@@ -11,23 +11,19 @@ describe("RoleController", () => {
     userTokenJWT = response.body.jwt;
   });
 
-  describe("GET /role/:id", () => {
+  describe("POST /role/:id", () => {
+    
+  });
+
+  describe("GET /message/:id", () => {
     
   }); 
 
-  describe("GET /role/all", () => {
+  describe("UPDATE /message/update/:id", () => {
     
   });
 
-  describe("GET /role/public/all", () => {
-    
-  });
-
-  describe("PATCH /role/update/:id", () => {
-    
-  });
-  
-  describe("DELETE /role/:id", () => {
+  describe("DELETE /message /:id", () => {
     
   });
 });

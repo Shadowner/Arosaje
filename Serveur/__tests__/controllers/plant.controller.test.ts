@@ -68,11 +68,11 @@ describe("PlantController", () => {
     
   });
 
-  describe("DELETE /plant/:id", () => {
+  describe("PATCH /plant/update/:id", () => {
     
   });
-
-  describe("UPDATE /plant/update/:id", () => {
+  
+  describe("DELETE /plant/:id", () => {
     
   });
 });
