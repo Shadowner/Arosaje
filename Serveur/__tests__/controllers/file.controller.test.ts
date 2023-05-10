@@ -2,7 +2,7 @@ import request from "supertest";
 
 const baseURL = "http://localhost:8080"
 
-describe("ConversationController", () => {
+describe("FileController", () => {
   let userTokenJWT: string;
 
   beforeAll(async () => {
@@ -11,15 +11,27 @@ describe("ConversationController", () => {
     userTokenJWT = response.body.jwt;
   });
 
-  describe("GET /conversation/:id", () => {
+  describe("GET /file/:id", () => {
     
   }); 
 
-  describe("POST /conversation/:id/message/send", () => {
+  describe("GET /file/public/all", () => {
     
   }); 
 
-  describe("DELETE /conversation/:id/delete", () => {
+  describe("GET /file/all", () => {
+    
+  }); 
+
+  describe("POST /file/upload", () => {
+    
+  }); 
+
+  describe("PATCH /file/update", () => {
+    
+  }); 
+
+  describe("DELETE /file/:id/delete", () => {
     
   }); 
 });
