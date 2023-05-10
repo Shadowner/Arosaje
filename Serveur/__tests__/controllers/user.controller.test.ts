@@ -102,7 +102,7 @@ describe("UserController", () => {
   });
 
   // Delete route
-  describe("DELETE /user", () => {
+  describe("DELETE /user/:id", () => {
     test("should return a 204 status code when given a valid JWT and user ID", async () => {
       const response = await request(baseURL)
         .delete(`/user/${userToDelete.id}`)
