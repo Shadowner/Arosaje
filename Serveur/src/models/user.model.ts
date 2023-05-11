@@ -28,7 +28,7 @@ export interface UserCreate {
 @Entity()
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  id!: number;
+  id!: string;
 
   @Column()
   lastname!: string;

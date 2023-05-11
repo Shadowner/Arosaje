@@ -14,16 +14,30 @@ function testMiddleWare(request: ExpressRequestWithUser, res: Response, next: ()
 export class ConversationController extends Controller {
 
     @Security("jwt")
-    @Delete("{id}/delete")
-    public async delete(@Path() id: string) {
-        //TODO : Vérifier perm si créateur
+    @Delete("{id}/leave")
+    public async delete(@Path() id: string, @Request() request: ExpressRequestWithUser) {
+        const user = request.user;
 
+        if (!user.conversations.find((conversation: Conversation) => conversation.id === id)) {
+            throw new Error('You are not in this conversation');
+        }
+
+        const conversation = await Conversation.findOneBy({ id });
+        if (!conversation) {
+            throw new Error('Conversation not found');
+        }
+
+        user.conversations = user.conversations.filter((conversation: Conversation) => conversation.id !== id);
+        await user.save();
+
+        if (conversation.participants.length === 1) {
+            await conversation.remove();
+        }
     }
 
-    @Middlewares(testMiddleWare)
     @Security("jwt")
     @Get("{id}")
-    public async fetchById(@Path() id: number, @Request() request: ExpressRequestWithUser) {
+    public async fetchById(@Path() id: string, @Request() request: ExpressRequestWithUser) {
         const user = request.user;
 
         if (!user.conversations.find((conversation: Conversation) => conversation.id === id)) {
@@ -40,7 +54,7 @@ export class ConversationController extends Controller {
 
     @Security("jwt")
     @Post("{id}/message/send")
-    public async sendNewMessage(@Path() id: number, @Body() content: { content: string }, @Request() request: ExpressRequestWithUser) {
+    public async sendNewMessage(@Path() id: string, @Body() content: { content: string }, @Request() request: ExpressRequestWithUser) {
         const user = request.user;
 
         if (!user.conversations.find((conversation: Conversation) => conversation.id === id)) {

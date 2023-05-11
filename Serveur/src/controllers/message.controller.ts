@@ -45,7 +45,6 @@ export class MessageController extends Controller {
     @Post("see/{id}")
     public async see(@Path() id: string) {
         //TODO: ???
-
     }
 
     @Security("jwt")

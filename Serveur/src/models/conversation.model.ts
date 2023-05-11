@@ -4,8 +4,8 @@ import { Message } from './message.model';
 
 @Entity()
 export class Conversation extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
   @Column()
   name!: string;
