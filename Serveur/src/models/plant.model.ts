@@ -22,6 +22,7 @@ export class Plant extends BaseEntity {
     type: 'decimal',
     precision: 10,
     scale: 8,
+    nullable: true,
   })
   longitude!: number;
 
@@ -29,6 +30,7 @@ export class Plant extends BaseEntity {
     type: 'decimal',
     precision: 9,
     scale: 8,
+    nullable: true,
   })
   latitude!: number;
 
@@ -52,18 +54,17 @@ export class Plant extends BaseEntity {
   })
   guards!: Guard[];
 
-  @ManyToOne(() => PlantType)
-  @JoinColumn({ name: 'plantTypeId' })
-  plantType!: PlantType;
+  @Column()
+  plantType!: string;
 
-  public toObject() {
+  public toObject(withUserId: boolean = false) {
     return {
       id: this.id,
       name: this.name,
       description: this.description,
       size: this.size,
-      userId: this.user.id,
-      plantType: this.plantType.id,
+      userId: withUserId ? this.user.id : undefined,
+      plantType: this.plantType,
     };
   }
 

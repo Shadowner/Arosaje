@@ -16,11 +16,11 @@ export interface UserCreate {
   lastname: string;
   firstname: string;
   birthdate: Date;
-  address: string;
-  city: string;
-  country: string;
+  address?: string;
+  city?: string;
+  country?: string;
   email: string;
-  phoneNumber: string;
+  phoneNumber?: string;
   password: string;
 }
 
@@ -43,33 +43,55 @@ export class User extends BaseEntity {
   @IsDate()
   birthdate!: Date;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   address!: string;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   city!: string;
 
   @Column()
-  twoFactorEnabled!: boolean;
+  twoFactorEnabled: boolean = false;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   country!: string;
 
   @Column({
+    type: 'text',
+    nullable: true,
     unique: true,
   })
   @IsEmail()
   email!: string;
 
-  @IsEmail()
+  @Column({
+    type: 'text',
+    nullable: true,
+    unique: true,
+  })
+  @IsEmail({})
   tmpEmail!: string | null;
 
 
-  @Column()
+  @Column({
+    type: 'text',
+    nullable: true,
+    //TODO: t'imagine bien le fraté
+    // unique: true,
+  })
   @Length(0, 10)
   phoneNumber!: string;
 
-  @Column()
+  @Column({
+    type: 'text',
+    nullable: true,
+    unique: true,
+  })
   @Length(0, 10)
   tmpPhoneNumber!: string | null;
   @Column()

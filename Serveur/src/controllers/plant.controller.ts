@@ -13,7 +13,7 @@ export class PlantController extends Controller {
     @Security("jwt")
     @Patch("update/{id}")
     public async update(@Path() id: number, @Body() updateObj: Partial<PlantCreate>, @Request() req: ExpressRequestWithUser) {
-        const user = req.user;
+        const { user } = req.user;
 
         const plant = await Plant.findOneBy({ id });
         if (!plant) {
@@ -34,7 +34,7 @@ export class PlantController extends Controller {
     @Security("jwt")
     @Delete("{id}")
     public async delete(@Path() id: number, @Request() req: ExpressRequestWithUser) {
-        const user = req.user;
+        const { user } = req.user;
 
         const plant = await Plant.findOneBy({ id });
         if (!plant) {
@@ -51,7 +51,7 @@ export class PlantController extends Controller {
     @Security("jwt")
     @Get("{id}")
     public async fetchById(@Path() id: number, @Request() req: ExpressRequestWithUser) {
-        const user = req.user;
+        const { user } = req.user;
 
         const plant = await Plant.findOneBy({ id });
         if (!plant) {
@@ -74,9 +74,9 @@ export class PlantController extends Controller {
     }
 
     @Security("jwt")
-    @Get("all")
+    @Get("get/all")
     public async fetchAll(@Request() req: ExpressRequestWithUser) {
-        const user = req.user;
+        const { user } = req.user;
         const plants = user.plants;
         return plants.map(plant => plant.toObject());
     }
@@ -97,13 +97,16 @@ export class PlantController extends Controller {
         return plants.map(plant => plant.toObject());
     }
 
+    @Security("jwt")
     @Post("create")
     public async create(@Body() plant: PlantCreate, @Request() req: ExpressRequestWithUser) {
-        const user = req.user;
+        const { user } = req.user;
 
         const test = new Plant();
         test.name = plant.name;
         test.description = plant.description;
+        test.size = Number(plant.size);
+        test.plantType = plant.type;
         test.user = user;
         await test.save();
 

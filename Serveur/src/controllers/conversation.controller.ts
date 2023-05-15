@@ -16,7 +16,7 @@ export class ConversationController extends Controller {
     @Security("jwt")
     @Delete("{id}/leave")
     public async delete(@Path() id: string, @Request() request: ExpressRequestWithUser) {
-        const user = request.user;
+        const { user } = request.user
 
         if (!user.conversations.find((conversation: Conversation) => conversation.id === id)) {
             throw new Error('You are not in this conversation');
@@ -38,7 +38,7 @@ export class ConversationController extends Controller {
     @Security("jwt")
     @Get("{id}")
     public async fetchById(@Path() id: string, @Request() request: ExpressRequestWithUser) {
-        const user = request.user;
+        const { user } = request.user
 
         if (!user.conversations.find((conversation: Conversation) => conversation.id === id)) {
             throw new Error('You are not in this conversation');
@@ -55,7 +55,7 @@ export class ConversationController extends Controller {
     @Security("jwt")
     @Post("{id}/message/send")
     public async sendNewMessage(@Path() id: string, @Body() content: { content: string }, @Request() request: ExpressRequestWithUser) {
-        const user = request.user;
+        const { user } = request.user
 
         if (!user.conversations.find((conversation: Conversation) => conversation.id === id)) {
             throw new Error('You are not in this conversation');

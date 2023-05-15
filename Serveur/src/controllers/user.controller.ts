@@ -7,11 +7,14 @@ import { UserNotExist } from "../errors/user/UserNotExist";
 import { ExpressRequestWithUser } from "../interfaces/ExpressJwt";
 import { User, UserCreate } from "../models/user.model";
 import { TwoFAService } from "../services/2fa.service";
-import { JWTServices } from "../services/jwt.service";
+import { JWTServices, JWT_TYPE } from "../services/jwt.service";
 import { MailService } from "../services/mail.service";
 import { PhoneService } from "../services/phone.service";
 import { TokenService } from "../services/token.service";
 import { UserService } from "../services/user.service";
+import { InvalidToken } from '../errors/user/InvalidToken';
+import { Role } from '../models/role.model';
+import { In } from "typeorm";
 
 export interface ILoginCredentials {
     password: string,
@@ -45,9 +48,9 @@ export class UserController extends Controller {
             throw new UserAlreadyExist();
         }
 
-        const instanciedUser = User.create({ ...user });
+        const instanciedUser = User.create({ ...user, email: 'notdefined@yet', username: user.lastname + "." + user.firstname });
         instanciedUser.tmpEmail = user.email;
-        instanciedUser.tmpPhoneNumber = user.phoneNumber;
+        instanciedUser.tmpPhoneNumber = user.phoneNumber || null;
         //@ts-ignore
         instanciedUser.email = null
         //@ts-ignore
@@ -56,16 +59,22 @@ export class UserController extends Controller {
         const newUser = await instanciedUser.save();
 
         const token = this.TokenService.generateToken(newUser);
-
+        const jwt = this.JWTServices.generateToken(newUser, JWT_TYPE.VALIDATING);
         await this.MailService.sendConfirmationMail(newUser, token);
 
-        return { needConfirmation: true, message: 'Un mail de confirmation vous a été envoyé' };
+        return { needConfirmation: true, message: 'Un mail de confirmation vous a été envoyé', jwt };
     }
 
     @Post("login")
     public async login(@Body() credential: ILoginCredentials) {
-        const user = await User.findOneBy({
-            'email': credential.email
+        const user = await User.findOne({
+            where: {
+
+                'email': credential.email
+            },
+            relations: {
+                roles: true
+            }
         });
 
         if (!user) {
@@ -105,7 +114,7 @@ export class UserController extends Controller {
     @Security("jwt")
     @Patch("update")
     public async update(@Body() updateObj: Partial<UserCreate>, @Request() req: ExpressRequestWithUser) {
-        const user = req.user;
+        const { user } = req.user;
 
         if (updateObj.email) {
             throw new Error('Use the /email route to update your email');
@@ -135,7 +144,7 @@ export class UserController extends Controller {
     @Security("jwt")
     @Patch("phone")
     public async phone(@Body() updateObj: { phone: string }, @Request() req: ExpressRequestWithUser) {
-        const user = req.user;
+        const { user } = req.user;
 
         const potentialUser = await User.findOneBy({ phoneNumber: updateObj.phone })
         if (potentialUser) {
@@ -171,7 +180,7 @@ export class UserController extends Controller {
     @Security("jwt")
     @Patch("email")
     public async email(@Body() updateObj: { email: string }, @Request() req: ExpressRequestWithUser) {
-        const user = req.user;
+        const { user } = req.user;
 
         if (updateObj.email === user.email) {
             throw new Error('Email is the same');
@@ -195,8 +204,9 @@ export class UserController extends Controller {
     public async confirmEmail(@Path() token: string) {
 
         // TODO: Je crois que c'est stupide de faire comme ça mais flemme de réfléchir pour l'instant
-
+        console.log(token);
         const user = await this.TokenService.verifyToken(token);
+        console.log(user);
         if (!user || !user.tmpEmail) {
             throw new Error('Invalid token');
         }
@@ -205,13 +215,54 @@ export class UserController extends Controller {
         user.tmpEmail = null;
         await user.save();
 
+        return { jwt: this.JWTServices.generateToken(user, JWT_TYPE.REGISTERING) };
+    }
+
+    @Security("jwt")
+    @Get("email/resend")
+    public async resendMail(@Request() req: ExpressRequestWithUser) {
+        const { user } = req.user;
+
+        const token = this.TokenService.generateToken(user);
+        const jwt = this.JWTServices.generateToken(user, JWT_TYPE.VALIDATING);
+        await this.MailService.sendConfirmationMail(user, token);
+
+        return { needConfirmation: true, message: 'Un mail de confirmation vous a été envoyé', jwt };
+    }
+
+
+    @Security("jwt")
+    @Post("register/finish")
+    public async finishRegistering(@Request() req: ExpressRequestWithUser, @Body() body: { roles: number[] }) {
+        const { user, jwtType } = req.user;
+        if (jwtType != JWT_TYPE.REGISTERING) {
+            throw new InvalidToken();
+        }
+
+        if (!body.roles || body.roles.length === 0) {
+            throw new Error('No roles provided');
+        }
+
+        const roles = await Role.find({
+            where: {
+                id: In(body.roles)
+            }
+        });
+        if (roles.length !== body.roles.length) {
+            throw new Error('Invalid roles provided');
+        }
+
+        user.roles = roles;
+        await user.save();
+
         return { jwt: this.JWTServices.generateToken(user) };
     }
+
 
     @Security("jwt")
     @Delete("delete")
     public async delete(@Request() req: ExpressRequestWithUser) {
-        const user = req.user;
+        const { user } = req.user;
         throw new Error("Not implemented");
     }
 
@@ -228,7 +279,7 @@ export class UserController extends Controller {
         return { message: 'Reset password email sent', needConfirmation: true };
     }
 
-    @Get("reset-password/{token}")
+    @Post("reset-password/{token}")
     public async resetPassword(@Path() token: string, @Body() password: { password: string }) {
         const user = await this.TokenService.verifyToken(token);
         if (!user) {

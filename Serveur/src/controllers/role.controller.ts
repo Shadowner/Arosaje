@@ -3,6 +3,7 @@ import { Body, Controller, Delete, Get, Patch, Path, Post, Request, Route, Secur
 import { Inject } from "typescript-ioc";
 import { BaseEntity } from "../DTO/BaseEntity";
 import { RoleDTO } from "../DTO/RoleDTO";
+import { Role } from '../models/role.model';
 
 @Tags("Role")
 @Route("role")
@@ -27,16 +28,21 @@ export class RoleController extends Controller {
     }
 
     @Get("public/all")
-    public async fetchAllPublic(): Promise<Partial<Omit<RoleDTO, keyof (BaseEntity) | 'flags'>>> {
-        return {
-            "name": 'coucou'
-        }
+    public async fetchAllPublic(): Promise<{
+        id: number;
+        name: string;
+    }[]> {
+        return (await Role.find({})).map((role) => role.toObject());
+
     }
 
-    @Security("jwt")
     @Get("all")
-    public async fetchAll(): Promise<RoleDTO[]> {
-        return [];
+    public async fetchAll(): Promise<{
+        id: number;
+        name: string;
+    }[]> {
+        console.log("fetching all roles");
+        return (await Role.find({})).map((role) => role.toObject());
     }
 
     constructor() {

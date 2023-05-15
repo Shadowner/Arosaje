@@ -5,6 +5,7 @@ import { User } from "../models/user.model";
 export class MailService {
 
     public sendMail(to: string, subject: string, html: string) {
+        console.log(`Sending mail to ${to} with subject ${subject} and html ${html}`);
         return true;
     }
 

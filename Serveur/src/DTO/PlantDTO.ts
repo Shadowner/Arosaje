@@ -17,5 +17,5 @@ export interface PlantCreate {
     name: string,
     type: string,
     description: string,
-    size: string,
+    size: number,
 }

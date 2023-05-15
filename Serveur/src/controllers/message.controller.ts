@@ -11,7 +11,7 @@ export class MessageController extends Controller {
     @Security("jwt", ["admin"])
     @Patch("{id}/update")
     public async update(@Body() content: string, @Path() id: number, @Request() request: ExpressRequestWithUser) {
-        const user = request.user;
+        const { user } = request.user
         const message = await Message.findOneBy({ id });
         if (!message) {
             throw new Error('Message not found');
@@ -28,7 +28,7 @@ export class MessageController extends Controller {
     @Security("jwt")
     @Delete("{id}")
     public async delete(@Path() id: number, @Request() request: ExpressRequestWithUser) {
-        const user = request.user;
+        const { user } = request.user
         const message = await Message.findOneBy({ id });
         if (!message) {
             throw new Error('Message not found');
@@ -50,7 +50,7 @@ export class MessageController extends Controller {
     @Security("jwt")
     @Get("{id}")
     public async fetchById(@Path() id: number, @Request() request: ExpressRequestWithUser) {
-        const user = request.user;
+        const { user } = request.user
         const message = await Message.findOneBy({ id });
 
         if (!message) {

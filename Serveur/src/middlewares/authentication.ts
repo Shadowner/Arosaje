@@ -41,13 +41,14 @@ export async function expressAuthentication(
                             id: decoded.id
                         },
                         relations: {
-                            roles: true
+                            roles: true,
+                            plants: true
                         }
                     }
                 );
                 if (!user)
                     return rej(new InvalidToken());
-                return res(user);
+                return res({ user, jwtType: decoded.type });
             });
         });
     }

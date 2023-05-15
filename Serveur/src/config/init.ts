@@ -34,6 +34,7 @@ async function usersInitialisation(email: string, roles: Role[]) {
         user.city = 'city';
         user.country = 'country';
         user.phoneNumber = '0123456789';
+        user.username = email;
 
         await user.save();
     }

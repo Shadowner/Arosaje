@@ -3,6 +3,12 @@ import { Singleton } from "typescript-ioc";
 import { InvalidToken } from "../errors/user/InvalidToken";
 import { User } from "../models/user.model";
 
+export enum JWT_TYPE {
+    USER,
+    REGISTERING,
+    VALIDATING,
+    PASSWORD_RESET,
+}
 @Singleton
 export class JWTServices {
     constructor(
@@ -14,11 +20,14 @@ export class JWTServices {
         console.log(this.jwtSecret, this.jwtExpiration)
     }
 
-    public generateToken(user: User) {
+    public generateToken(user: User, type: JWT_TYPE = JWT_TYPE.USER) {
         const token = sign({
             id: user.id,
             email: user.email,
-            role: user.roles?.map(role => role.toObject()),
+            roles: user.roles?.map(role => role.toObject()),
+            type: type,
+            firstname: user.firstname,
+            lastname: user.lastname,
         }, this.jwtSecret, {
             expiresIn: this.jwtExpiration,
         });
